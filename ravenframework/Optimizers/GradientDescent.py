@@ -480,6 +480,8 @@ class GradientDescent(RavenSampled):
       @ In, optVal, float, value of objective variable (corrected for min/max)
     """
     self._stepTracker[traj]['grads'].append((rlz, info))
+    if self._writeSteps == 'every':
+      self._updateSolutionExport(traj, rlz, 'rejected', 'gradient')
 
   # * * * * * * * * * * * * * * * *
   # Resolving potential opt points

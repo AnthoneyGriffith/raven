@@ -165,13 +165,15 @@ class ScikitLearnBase(SupervisedLearning):
       @ Out, targetVals, array, shape = [n_samples,n_targets], an array of output target
         associated with the corresponding points in featureVals
     """
+    ## Thesis specific
+    ## Need to train GPR on single evaluation point
     # check if all targets only have a single unique value, just store that value, no need to fit/train
-    if all([len(np.unique(targetVals[:,index])) == 1 for index in range(targetVals.shape[1])]):
-      self.uniqueVals = [np.unique(targetVals[:,index])[0] for index in range(targetVals.shape[1]) ]
-    else:
-      # the multi-target is handled by the internal wrapper
-      self.uniqueVals = None
-      self.model.fit(featureVals,targetVals)
+    # if all([len(np.unique(targetVals[:,index])) == 1 for index in range(targetVals.shape[1])]):
+    #   self.uniqueVals = [np.unique(targetVals[:,index])[0] for index in range(targetVals.shape[1]) ]
+    # else:
+    # the multi-target is handled by the internal wrapper
+    self.uniqueVals = None
+    self.model.fit(featureVals,targetVals)
     if self.computeImportances and self.featureImportances_ is None:
       # we compute importances using a permutation method
       from sklearn.inspection import permutation_importance
