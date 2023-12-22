@@ -236,7 +236,8 @@ class NumpyRNG:
     # seed value directly. FIXME: If somebody in the future knows of a way to get the same initial
     # state from the seed without using a private method, please change this! -- j-bryan, 2023-11-09
     bitGenerator._legacy_seeding(self._seed)
-    self._engine = np.random.Generator(bitGenerator)
+    # self._engine = np.random.Generator(bitGenerator)
+    self._engine = np.random.default_rng()
 
   def getRNGSeed(self):
     """
