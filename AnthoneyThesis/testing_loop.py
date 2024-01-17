@@ -35,11 +35,15 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
         @ In, sample_count, number of samples to run analysis for
         @ In, solution_dir, name of csv where solutions are stored
     """
-    # Adding raven running script to traven directory
+    # Adding raven running script to raven directory, correcting paths
     os_home = os.path.expanduser("~")
     raven = raven.replace("~", os_home)
     outer_dir = outer_dir.replace("~", os_home)
+    solution_dir = solution_dir.replace("~", os_home)
     raven_command = raven + "raven_framework " + outer_dir
+
+    # Need to make sure correct raven executable is used in outer, this avoids having to run HERON
+    addExecutableToOuter(raven, outer_dir)
 
     # Looping over sample runs
     for samp in range(sample_count):
@@ -71,6 +75,27 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
         dataframe.to_csv(csv_loc)
         
         updateOuterInitialPoints(outer_dir)
+
+def addExecutableToOuter(raven, outer_file):
+    """
+        Parses and updates outer file optimizer initial points
+        @ In, raven, str, absolute directory of raven
+        @ In, outer_file, outer.xml to edit the initial points in optimization for
+    """
+    # Parsing outer
+    parsed = tree.parse(outer_file)
+    # Models in outer
+    models = parsed.find("Models")
+    # RAVEN code node is where we want to change executable
+    code = models.findall(".//executable/..[@name='raven']")
+    if len(code) != 1:
+        print('Something is very wrong with outer, please fix: No Raven code model found, or multiple defined.')
+        exit()
+    raven_code = code[0]
+    # Changing executable to correct thing
+    raven_code.find('executable').text = raven + '/raven_framework'
+    # Updating outer file
+    parsed.write(outer_file)
 
 def updateOuterInitialPoints(outer_file):
     """
