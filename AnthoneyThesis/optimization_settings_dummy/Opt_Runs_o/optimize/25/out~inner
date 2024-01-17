@@ -1,0 +1,742 @@
+C:\Users\antho\AppData\Roaming\Python\Python310\site-packages\win32\lib\pywintypes.py:51: DeprecationWarning: getargs: The 'u' format is deprecated. Use 'U' instead.
+  found = _win32sysloader.GetModuleFilename(filename)
+C:\Users\antho\AppData\Roaming\Python\Python310\site-packages\win32\lib\pywintypes.py:65: DeprecationWarning: getargs: The 'u' format is deprecated. Use 'U' instead.
+  found = _win32sysloader.LoadModule(filename)
+C:\Users\antho\AppData\Roaming\Python\Python310\site-packages\numdifftools\extrapolation.py:10: DeprecationWarning: Please use `convolve1d` from the `scipy.ndimage` namespace, the `scipy.ndimage.filters` namespace is deprecated.
+  from scipy.ndimage.filters import convolve1d
+C:\Users\antho\AppData\Roaming\Python\Python310\site-packages\numdifftools\multicomplex.py:35: DeprecationWarning: `finfo.machar` is deprecated (NumPy 1.22)
+  _TINY = np.finfo(float).machar.tiny
+
+Copyright 2017 Battelle Energy Alliance, LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+  
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      .---.        .------######       #####     ###   ###  ########  ###    ###
+     /     \  __  /    --###  ###    ###  ###   ###   ###  ###       #####  ###
+    / /     \(  )/    --###  ###    ###   ###  ###   ###  ######    ### ######
+   //////   ' \/ `   --#######     #########  ###   ###  ###       ###  #####
+  //// / // :    :   -###   ###   ###   ###    ######   ####      ###   ####
+ // /   /  /`    '---###    ###  ###   ###      ###    ########  ###    ###
+//          //..\\
+===========UU====UU=============================================================
+           '//||\\`
+             ''``
+    
+RAVEN Python dependencies located and checked.
+Loading plugin "HERON" at C:\Users\antho\Documents\projects\HERON
+ ... successfully imported "HERON" ...
+Loading plugin "TEAL" at C:\Users\antho\Documents\projects\raven\plugins\TEAL
+ ... successfully imported "TEAL" ...
+Loading plugin "ExamplePlugin" at C:\Users\antho\Documents\projects\raven\plugins\ExamplePlugin
+ ... successfully imported "ExamplePlugin" ...
+(    0.01 sec) SIMULATION               : Message         -> Global verbosity level is "debug"
+(    0.03 sec) VariableGroup            : DEBUG           -> Variable group "GRO_interp" includes: stepwise
+(    0.03 sec) VariableGroup            : DEBUG           -> Variable group "GRO_cashflows" includes: 
+(    0.03 sec) VariableGroup            : DEBUG           -> Variable group "GRO_init_disp" includes: Dispatch__steamer__production__steam,Dispatch__generator__production__electricity,Dispatch__generator__production__steam,Dispatch__electr_market__production__electricity,Dispatch__electr_flex__production__electricity
+(    0.03 sec) VariableGroup            : DEBUG           -> Variable group "GRO_full_dispatch" includes: Dispatch__steamer__production__steam,Dispatch__generator__production__electricity,Dispatch__generator__production__steam,Dispatch__electr_market__production__electricity,Dispatch__electr_flex__production__electricity
+(    0.03 sec) VariableGroup            : DEBUG           -> Variable group "GRO_final_return" includes: mean_NPV,std_NPV,med_NPV,mean_TotalActivity__steamer__production__steam,mean_TotalActivity__generator__production__electricity,mean_TotalActivity__generator__production__steam,mean_TotalActivity__electr_market__production__electricity,mean_TotalActivity__electr_flex__production__electricity,std_TotalActivity__steamer__production__steam,std_TotalActivity__generator__production__electricity,std_TotalActivity__generator__production__steam,std_TotalActivity__electr_market__production__electricity,std_TotalActivity__electr_flex__production__electricity,med_TotalActivity__steamer__production__steam,med_TotalActivity__generator__production__electricity,med_TotalActivity__generator__production__steam,med_TotalActivity__electr_market__production__electricity,med_TotalActivity__electr_flex__production__electricity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_capacities" includes: steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_dispatch_in_Time" includes: Signal
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_armasamples_in_scalar" includes: scaling,steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_armasamples_in" includes: scaling,steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_dispatch_in_scalar" includes: steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity,scaling
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_dispatch_in" includes: steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity,scaling,Signal
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_armasamples_out_scalar" includes: NPV,TotalActivity__steamer__production__steam,TotalActivity__generator__production__electricity,TotalActivity__generator__production__steam,TotalActivity__electr_market__production__electricity,TotalActivity__electr_flex__production__electricity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_armasamples_out" includes: NPV,TotalActivity__steamer__production__steam,TotalActivity__generator__production__electricity,TotalActivity__generator__production__steam,TotalActivity__electr_market__production__electricity,TotalActivity__electr_flex__production__electricity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_armasamples" includes: scaling,steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity,NPV,TotalActivity__steamer__production__steam,TotalActivity__generator__production__electricity,TotalActivity__generator__production__steam,TotalActivity__electr_market__production__electricity,TotalActivity__electr_flex__production__electricity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_dispatch_out" includes: NPV,TotalActivity__steamer__production__steam,TotalActivity__generator__production__electricity,TotalActivity__generator__production__steam,TotalActivity__electr_market__production__electricity,TotalActivity__electr_flex__production__electricity
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_full_dispatch_indices" includes: Time,Year
+(    0.04 sec) VariableGroup            : DEBUG           -> Variable group "GRO_dispatch" includes: steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity,scaling,Signal,NPV,TotalActivity__steamer__production__steam,TotalActivity__generator__production__electricity,TotalActivity__generator__production__steam,TotalActivity__electr_market__production__electricity,TotalActivity__electr_flex__production__electricity,_ROM_Cluster,Time,Year
+(    0.04 sec) SIMULATION               : DEBUG           -> -- Reading the block: Steps --
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "MultiRun" named "arma_sampling" ...
+(    0.04 sec) STEP MULTIRUN            : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP MULTIRUN            : DEBUG           -> the mapping used in the model for checking the compatibility of usage should be more similar to self.parList to avoid the double mapping below FIXME
+(    0.04 sec) STEP MULTIRUN            : DEBUG           -> reactivate check on Input as soon as loadCsv gets out from the PostProcessor models!
+(    0.04 sec) STEP MULTIRUN            : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Class          : MultiRun        from <class 'ravenframework.Steps.SingleRun.SingleRun'>
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Type           : MultiRun
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Name           : arma_sampling
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Input          : Class: DataObjects Type: PointSet  Global name: dispatch_placeholder
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Model          : Class: Models Type: EnsembleModel  Global name: sample_and_dispatch
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Sampler        : Class: Samplers Type: MonteCarlo  Global name: mc_arma_dispatch
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Output         : Class: DataObjects Type: DataSet  Global name: arma_metrics
+(    0.04 sec) STEP MULTIRUN            : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "IOStep" named "write_full" ...
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Class          : IOStep          from <class 'ravenframework.Steps.Step.Step'>
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Type           : IOStep
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Name           : write_full
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Input          : Class: DataObjects Type: DataSet  Global name: disp_full
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Output         : Class: Databases Type: NetCDF  Global name: disp_full
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "PostProcess" named "summarize" ...
+(    0.04 sec) STEP SINGLERUN           : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP SINGLERUN           : DEBUG           -> the mapping used in the model for checking the compatibility of usage should be more similar to self.parList to avoid the double mapping below FIXME
+(    0.04 sec) STEP SINGLERUN           : DEBUG           -> reactivate check on Input as soon as loadCsv gets out from the PostProcessor models!
+(    0.04 sec) STEP SINGLERUN           : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Class          : PostProcess     from <class 'ravenframework.Steps.SingleRun.SingleRun'>
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Type           : PostProcess
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Name           : summarize
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Input          : Class: DataObjects Type: PointSet  Global name: arma_metrics
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Model          : Class: Models Type: PostProcessor  Global name: statistics
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Output         : Class: DataObjects Type: PointSet  Global name: metrics_stats
+(    0.04 sec) STEP SINGLERUN           : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "IOStep" named "database" ...
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Class          : IOStep          from <class 'ravenframework.Steps.Step.Step'>
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Type           : IOStep
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Name           : database
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Input          : Class: DataObjects Type: PointSet  Global name: metrics_stats
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Output         : Class: OutStreams Type: Print  Global name: disp_results
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "IOStep" named "read_Price" ...
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Class          : IOStep          from <class 'ravenframework.Steps.Step.Step'>
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Type           : IOStep
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Name           : read_Price
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Input          : Class: Files Type:   Global name: C:\Users\antho\Documents\projects\HERON\tests\integration_tests\TSA\Sine\arma.pk
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Output         : Class: Models Type: ROM  Global name: Price
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "IOStep" named "print_meta_Price" ...
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> move this tests to base class when it is ready for all the classes
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Class          : IOStep          from <class 'ravenframework.Steps.Step.Step'>
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Type           : IOStep
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Name           : print_meta_Price
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Sleep time     : 0.005
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Initial seed   : None
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Input          : Class: Models Type: ROM  Global name: Price
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Output         : Class: OutStreams Type: Print  Global name: Price_meta
+(    0.04 sec) STEP IOCOMBINED          : DEBUG           ->        Current Setting:
+( XML  UTILS ) Replaced text in <Input> with variable group "GRO_armasamples_in"
+( XML  UTILS ) Replaced text in <Output> with variable group "GRO_armasamples_out"
+( XML  UTILS ) Replaced text in <Output> with variable group "GRO_final_return"
+( XML  UTILS ) Replaced text in <Output> with variable group "GRO_full_dispatch"
+( XML  UTILS ) Replaced text in <Output> with variable group "GRO_dispatch"
+( XML  UTILS ) Replaced text in <Output> with variable group "GRO_cashflows"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_full_dispatch"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_full_dispatch"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_full_dispatch"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_cashflows"
+( XML  UTILS ) Replaced text in <Input> with variable group "GRO_dispatch_in"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Index> with variable group "GRO_dispatch_in_Time"
+( XML  UTILS ) Replaced text in <Input> with variable group "GRO_dispatch_in_scalar"
+(    0.04 sec) SIMULATION               : DEBUG           -> -- Reading the block: DataObjects --
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "DataSet" named "arma_samples" ...
+(    0.04 sec) DataSet                  : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) DataSet                  : DEBUG           ->        Class          : DataSet         from <class 'ravenframework.DataObjects.DataObject.DataObject'>
+(    0.04 sec) DataSet                  : DEBUG           ->        Type           : DataSet
+(    0.04 sec) DataSet                  : DEBUG           ->        Name           : arma_samples
+(    0.04 sec) DataSet                  : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) DataSet                  : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "PointSet" named "arma_metrics" ...
+InputData: Using param spec "DataSet" to read XML node "PointSet.
+(    0.04 sec) PointSet                 : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) PointSet                 : DEBUG           ->        Class          : PointSet        from <class 'ravenframework.DataObjects.DataSet.DataSet'>
+(    0.04 sec) PointSet                 : DEBUG           ->        Type           : PointSet
+(    0.04 sec) PointSet                 : DEBUG           ->        Name           : arma_metrics
+(    0.04 sec) PointSet                 : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) PointSet                 : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "PointSet" named "metrics_stats" ...
+InputData: Using param spec "DataSet" to read XML node "PointSet.
+(    0.04 sec) PointSet                 : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) PointSet                 : DEBUG           ->        Class          : PointSet        from <class 'ravenframework.DataObjects.DataSet.DataSet'>
+(    0.04 sec) PointSet                 : DEBUG           ->        Type           : PointSet
+(    0.04 sec) PointSet                 : DEBUG           ->        Name           : metrics_stats
+(    0.04 sec) PointSet                 : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) PointSet                 : DEBUG           ->        Current Setting:
+(    0.04 sec) SIMULATION               : DEBUG           -> Reading class "DataSet" named "disp_full" ...
+(    0.04 sec) DataSet                  : DEBUG           -> ------Reading Completed for:
+(    0.04 sec) DataSet                  : DEBUG           ->        Class          : DataSet         from <class 'ravenframework.DataObjects.DataObject.DataObject'>
+(    0.04 sec) DataSet                  : DEBUG           ->        Type           : DataSet
+(    0.04 sec) DataSet                  : DEBUG           ->        Name           : disp_full
+(    0.04 sec) DataSet                  : DEBUG           ->        Initialization Parameters:
+(    0.04 sec) DataSet                  : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "DataSet" named "dispatch_eval" ...
+(    0.05 sec) DataSet                  : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) DataSet                  : DEBUG           ->        Class          : DataSet         from <class 'ravenframework.DataObjects.DataObject.DataObject'>
+(    0.05 sec) DataSet                  : DEBUG           ->        Type           : DataSet
+(    0.05 sec) DataSet                  : DEBUG           ->        Name           : dispatch_eval
+(    0.05 sec) DataSet                  : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) DataSet                  : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "PointSet" named "dispatch_placeholder" ...
+InputData: Using param spec "DataSet" to read XML node "PointSet.
+(    0.05 sec) PointSet                 : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) PointSet                 : DEBUG           ->        Class          : PointSet        from <class 'ravenframework.DataObjects.DataSet.DataSet'>
+(    0.05 sec) PointSet                 : DEBUG           ->        Type           : PointSet
+(    0.05 sec) PointSet                 : DEBUG           ->        Name           : dispatch_placeholder
+(    0.05 sec) PointSet                 : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) PointSet                 : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "DataSet" named "Price_meta" ...
+(    0.05 sec) DataSet                  : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) DataSet                  : DEBUG           ->        Class          : DataSet         from <class 'ravenframework.DataObjects.DataObject.DataObject'>
+(    0.05 sec) DataSet                  : DEBUG           ->        Type           : DataSet
+(    0.05 sec) DataSet                  : DEBUG           ->        Name           : Price_meta
+(    0.05 sec) DataSet                  : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) DataSet                  : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "PointSet" named "Price_placeholder" ...
+InputData: Using param spec "DataSet" to read XML node "PointSet.
+(    0.05 sec) PointSet                 : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) PointSet                 : DEBUG           ->        Class          : PointSet        from <class 'ravenframework.DataObjects.DataSet.DataSet'>
+(    0.05 sec) PointSet                 : DEBUG           ->        Type           : PointSet
+(    0.05 sec) PointSet                 : DEBUG           ->        Name           : Price_placeholder
+(    0.05 sec) PointSet                 : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) PointSet                 : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "DataSet" named "Price_samples" ...
+(    0.05 sec) DataSet                  : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) DataSet                  : DEBUG           ->        Class          : DataSet         from <class 'ravenframework.DataObjects.DataObject.DataObject'>
+(    0.05 sec) DataSet                  : DEBUG           ->        Type           : DataSet
+(    0.05 sec) DataSet                  : DEBUG           ->        Name           : Price_samples
+(    0.05 sec) DataSet                  : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) DataSet                  : DEBUG           ->        Current Setting:
+(    0.05 sec) SIMULATION               : DEBUG           -> -- Reading the block: Databases --
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           -> NetCDF "disp_results" Read Mode is "overwrite".
+(    0.05 sec) DATABASE-NetCDF          : Message         -> Database is located at "C:\Users\antho\Documents\projects\optimization_settings\Opt_Runs_o\optimize\25\Opt_Runs_i\disp_results.nc"
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Class          : NetCDF          from <class 'ravenframework.Databases.Database.DataBase'>
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Type           : NetCDF
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Name           : disp_results
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Current Setting:
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           -> NetCDF "disp_full" Read Mode is "overwrite".
+(    0.05 sec) DATABASE-NetCDF          : Message         -> Database is located at "C:\Users\antho\Documents\projects\optimization_settings\Opt_Runs_o\optimize\25\Opt_Runs_i\disp_full.nc"
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           -> ------Reading Completed for:
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Class          : NetCDF          from <class 'ravenframework.Databases.Database.DataBase'>
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Type           : NetCDF
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Name           : disp_full
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Initialization Parameters:
+(    0.05 sec) DATABASE-NetCDF          : DEBUG           ->        Current Setting:
+( XML  UTILS ) Replaced text in <variables> with variable group "GRO_dispatch"
+( XML  UTILS ) Replaced text in <variables> with variable group "GRO_armasamples"
+(    0.05 sec) SIMULATION               : DEBUG           -> -- Reading the block: Models --
+(    0.05 sec) SIMULATION               : DEBUG           -> Reading class "ExternalModel" named "dispatch" ...
+ ... registered "HERON.DispatchManager" as a "ExternalModel" RAVEN entity.
+ ... registered "HERON.DispatchPlot" as a "None" RAVEN entity.
+(    0.08 sec) EXTERNAL MODEL           : Warning         -> <class 'DeprecationWarning'> "variables" node inputted but has been deprecated!  Please list variables in the "inputs" and "outputs" nodes instead.  This Warning will result in an error in RAVEN 3.0!
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           -> ------Reading Completed for:
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        Class          : ExternalModel   from <class 'ravenframework.Models.Dummy.Dummy'>
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        Type           : ExternalModel
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        Name           : dispatch
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        Initialization Parameters:
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        subType        : HERON.DispatchManager
+(    0.08 sec) EXTERNAL MODEL           : DEBUG           ->        Current Setting:
+(    0.08 sec) SIMULATION               : DEBUG           -> Reading class "EnsembleModel" named "sample_and_dispatch" ...
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           -> ------Reading Completed for:
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Class          : EnsembleModel   from <class 'ravenframework.Models.Dummy.Dummy'>
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Type           : EnsembleModel
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Name           : sample_and_dispatch
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Initialization Parameters:
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Models contained in EnsembleModel are : dict_keys(['dispatch', 'Price'])
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model dispatch TargetEvaluation is : None
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model dispatch Inputs are : []
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model Price TargetEvaluation is : None
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model Price Inputs are : []
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Current Setting:
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Models contained in EnsembleModel are : dict_keys(['dispatch', 'Price'])
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model dispatch TargetEvaluation is : None
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model dispatch Inputs are : []
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model Price TargetEvaluation is : None
+(    0.08 sec) EnsembleModel MODEL      : DEBUG           ->        Model Price Inputs are : []
+(    0.08 sec) SIMULATION               : DEBUG           -> Reading class "PostProcessor" named "statistics" ...
+InputData: Using param spec "EconomicRatio" to read XML node "PostProcessor.
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           -> ------Reading Completed for:
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        Class          : PostProcessor   from <class 'ravenframework.Models.Model.Model'>
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        Type           : PostProcessor
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        Name           : statistics
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        Initialization Parameters:
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        subType        : EconomicRatio
+(    0.08 sec) POSTPROCESSOR MODEL      : DEBUG           ->        Current Setting:
+(    0.08 sec) SIMULATION               : DEBUG           -> Reading class "ROM" named "Price" ...
+INPUT SPEC ERROR adding checked and unchecked to alias  in  ROM len 1
+(    0.08 sec) ROM MODEL                : DEBUG           -> ------Reading Completed for:
+(    0.08 sec) ROM MODEL                : DEBUG           ->        Class          : ROM             from <class 'ravenframework.Models.Dummy.Dummy'>
+(    0.08 sec) ROM MODEL                : DEBUG           ->        Type           : ROM
+(    0.08 sec) ROM MODEL                : DEBUG           ->        Name           : Price
+(    0.09 sec) ROM MODEL                : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) ROM MODEL                : DEBUG           ->        returnType     : 
+(    0.09 sec) ROM MODEL                : DEBUG           ->        qualityEstType : []
+(    0.09 sec) ROM MODEL                : DEBUG           ->        Features       : ['PlaceHolder']
+(    0.09 sec) ROM MODEL                : DEBUG           ->        Target         : PlaceHolder
+(    0.09 sec) ROM MODEL                : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> -- Reading the block: Files --
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "Input" named "libs" ...
+(    0.09 sec) UserGenerated File       : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Class          : UserGenerated   from <class 'ravenframework.Files.File'>
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Type           : UserGenerated
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Name           : libs
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "Input" named "C:\Users\antho\Documents\projects\HERON\tests\integration_tests\TSA\Sine\arma.pk" ...
+(    0.09 sec) UserGenerated File       : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Class          : UserGenerated   from <class 'ravenframework.Files.File'>
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Type           : UserGenerated
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Name           : C:\Users\antho\Documents\projects\HERON\tests\integration_tests\TSA\Sine\arma.pk
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) UserGenerated File       : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> -- Reading the block: Samplers --
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "MonteCarlo" named "mc_arma_dispatch" ...
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        Class          : MonteCarlo      from <class 'ravenframework.Samplers.Sampler.Sampler'>
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        Type           : MonteCarlo
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        Name           : mc_arma_dispatch
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        limit          : 3
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        initial seed   : 42
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        Current Setting:
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        counter        : 0
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        initial seed   : 42
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        SampledVarsPb  : {}
+(    0.09 sec) SAMPLER MONTECARLO       : DEBUG           ->        crowDist       : {}
+(    0.09 sec) SIMULATION               : DEBUG           -> -- Reading the block: Databases --
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           -> NetCDF "disp_debug" Read Mode is "overwrite".
+(    0.09 sec) DATABASE-NetCDF          : Message         -> Database is located at "C:\Users\antho\Documents\projects\optimization_settings\Opt_Runs_o\optimize\25\Opt_Runs_i\disp_debug.nc"
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Class          : NetCDF          from <class 'ravenframework.Databases.Database.DataBase'>
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Type           : NetCDF
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Name           : disp_debug
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Current Setting:
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           -> NetCDF "disp_results" Read Mode is "overwrite".
+(    0.09 sec) DATABASE-NetCDF          : Message         -> Database is located at "C:\Users\antho\Documents\projects\optimization_settings\Opt_Runs_o\optimize\25\Opt_Runs_i\disp_results.nc"
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Class          : NetCDF          from <class 'ravenframework.Databases.Database.DataBase'>
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Type           : NetCDF
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Name           : disp_results
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) DATABASE-NetCDF          : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> -- Reading the block: OutStreams --
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "Print" named "disp_debug" ...
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Class          : FilePrint       from <class 'ravenframework.OutStreams.PrintInterfaces.PrintInterface.PrintInterface'>
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Type           : OutStreamFilePrint
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Name           : disp_debug
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : disp_debug
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: arma_samples
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : disp_debug
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: arma_samples
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "Print" named "disp_results" ...
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Class          : FilePrint       from <class 'ravenframework.OutStreams.PrintInterfaces.PrintInterface.PrintInterface'>
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Type           : OutStreamFilePrint
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Name           : disp_results
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : disp_results
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: metrics_stats
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : disp_results
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: metrics_stats
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> Reading class "Print" named "Price_meta" ...
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Class          : FilePrint       from <class 'ravenframework.OutStreams.PrintInterfaces.PrintInterface.PrintInterface'>
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Type           : OutStreamFilePrint
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Name           : Price_meta
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) OUTSTREAM PRINT          : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : Price_meta
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: Price_meta
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) PrintEntity              : DEBUG           -> ------Reading Completed for:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Class          : Print           from <class 'ravenframework.OutStreams.OutStreamEntity.OutStreamEntity'>
+(    0.09 sec) PrintEntity              : DEBUG           ->        Type           : Print
+(    0.09 sec) PrintEntity              : DEBUG           ->        Name           : Price_meta
+(    0.09 sec) PrintEntity              : DEBUG           ->        Initialization Parameters:
+(    0.09 sec) PrintEntity              : DEBUG           ->        Source Name 0 :: Price_meta
+(    0.09 sec) PrintEntity              : DEBUG           ->        Current Setting:
+(    0.09 sec) SIMULATION               : DEBUG           -> Moving to working directory: C:\Users\antho\Documents\projects\optimization_settings\Opt_Runs_o\optimize\25\Opt_Runs_i
+(    0.09 sec) Job Handler              : DEBUG           -> Setting maxQueueSize to 1
+(    0.09 sec) Job Handler              : DEBUG           -> Using parallelMethod: ParallelLibEnum.shared because Input: parallelMethod: None internalParallel: False and Ray Availablility: True and Dask Availabilitiy: True
+(    0.09 sec) Job Handler              : DEBUG           -> Initializing parallel InternalParallel: False Nodes: 0
+(    0.09 sec) Job Handler              : DEBUG           -> JobHandler initialized with threading
+(    0.00 sec) SIMULATION               : Message         -> Simulation started at 2023-12-25 19:37:32
+(    0.00 sec) SIMULATION               : DEBUG           -> entering the run
+(    0.00 sec) SIMULATION               : Message         -> -- Beginning IOStep step "read_Price" ... --
+(    0.00 sec) STEP IOCOMBINED          : Message         -> ***  Beginning initialization ***
+(    0.00 sec) STEP IOCOMBINED          : DEBUG           -> jobHandler initialized
+(    0.00 sec) STEP IOCOMBINED          : Message         -> ***    Initialization done    ***
+(    0.00 sec) STEP IOCOMBINED          : Message         -> ***       Beginning run       ***
+(7174010.14 sec) Interp. Cluster ROM      : Message         -> Truncating macro parameter "Year" to "3" successive steps.
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***       Run finished        ***
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***     Closing the step      ***
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***        Step closed        ***
+(    0.10 sec) SIMULATION               : Message         -> -- End step read_Price of type: IOStep --
+
+(    0.10 sec) SIMULATION               : Message         -> -- Beginning IOStep step "print_meta_Price" ... --
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***  Beginning initialization ***
+(    0.10 sec) STEP IOCOMBINED          : DEBUG           -> jobHandler initialized
+(    0.10 sec) STEP IOCOMBINED          : DEBUG           -> for the role Output the item of class Print and name Price_meta has been initialized
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***    Initialization done    ***
+(    0.10 sec) STEP IOCOMBINED          : Message         -> ***       Beginning run       ***
+(    0.10 sec) STEP IOCOMBINED          : DEBUG           -> Adding meta "Price" to output "Price_meta"
+(    0.10 sec) DataSet                  : Warning         -> Nothing to write to CSV! Checking metadata ...
+(    0.10 sec) DataSet                  : DEBUG           -> Printing metadata XML: "Price_meta.xml"
+(    0.11 sec) STEP IOCOMBINED          : Message         -> ***       Run finished        ***
+(    0.11 sec) STEP IOCOMBINED          : Message         -> ***     Closing the step      ***
+(    0.11 sec) STEP IOCOMBINED          : Message         -> ***        Step closed        ***
+(    0.11 sec) SIMULATION               : Message         -> -- End step print_meta_Price of type: IOStep --
+
+(    0.11 sec) SIMULATION               : Message         -> -- Beginning MultiRun step "arma_sampling" ... --
+(    0.11 sec) STEP MULTIRUN            : Message         -> ***  Beginning initialization ***
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> jobHandler initialized
+(    0.11 sec) EnsembleModel MODEL      : Message         -> Model Execution list: Price -> dispatch
+(    0.11 sec) EnsembleModel MODEL      : Message         -> EnsembleModel connections determined a linear system. Picard's iterations not activated!
+(    0.11 sec) EnsembleModel MODEL      : DEBUG           -> Specs of Graph Network represented by EnsembleModel:
+(    0.11 sec) EnsembleModel MODEL      : DEBUG           -> Graph Degree Sequence is    : (1, 0)
+(    0.11 sec) EnsembleModel MODEL      : DEBUG           -> Graph Minimum/Maximum degree: (0, 1)
+(    0.11 sec) EnsembleModel MODEL      : DEBUG           -> Graph density/diameter      : (1.0, 2)
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> for the role Model, the item of class EnsembleModel and name sample_and_dispatch has been initialized
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> for the role Output the item of class PointSet and name arma_metrics has been initialized
+(    0.11 sec) SAMPLER MONTECARLO       : Message         -> No restart for SAMPLER MONTECARLO
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> for the role of sampler the item of class MonteCarlo and name mc_arma_dispatch has been initialized
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> Sampler initialization dictionary: {'externalSeeding': None}
+(    0.11 sec) STEP MULTIRUN            : DEBUG           -> Generating input batch of size 1
+(    0.11 sec) SAMPLER MONTECARLO       : DEBUG           ->  ... Sample point 1: {'scaling': 1.0, 'steamer_capacity': 11.0, 'generator_capacity': -100.0, 'electr_market_capacity': -2.0, 'electr_flex_capacity': -2043.0338741, 'denoises': 3}
+(    0.11 sec) STEP MULTIRUN            : Message         -> Submitted input 1
+(    0.11 sec) STEP MULTIRUN            : Message         -> ***    Initialization done    ***
+(    0.11 sec) STEP MULTIRUN            : Message         -> ***       Beginning run       ***
+(    0.13 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model Price
+(7174010.17 sec) Interp. Cluster ROM      : DEBUG           -> Evaluating interpolated ROM ...
+(7174010.17 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "10" (1 / 3)
+(7174010.18 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "11" (2 / 3)
+(7174010.19 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "12" (3 / 3)
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+(    0.18 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model dispatch
+C:\Users\antho\AppData\Roaming\Python\Python310\site-packages\pyutilib\misc\import_file.py:11: DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12; see the module's documentation for alternative uses
+  import imp
+(            ) UTILS                    : Message         -> importing module C:\Users\antho\Documents\projects\optimization_settings\transfers
+RUNNING HERON DISPATCH MANAGER
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.12714481353759766 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.0869441032409668 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.08970928192138672 s
+****************************************
+* Starting final cashflow calculations *
+****************************************
+DEBUGG CASHFLOWS
+ ... comp steamer ...
+ ... comp generator ...
+ ... comp electr_market ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.  14.  14.  14.]
+ ... comp electr_flex ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.          17.12802245  17.12802245  17.12802245]
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_market" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_flex" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+****************************************
+DEBUGG final cashflow metrics:
+   NPV 80.2199328766
+****************************************
+(    1.30 sec) STEP MULTIRUN            : Message         -> Just collected job 1 and sent to output "arma_metrics"
+(    1.30 sec) STEP MULTIRUN            : DEBUG           -> Testing if the sampler is ready to generate a new input
+(    1.31 sec) SAMPLER MONTECARLO       : DEBUG           ->  ... Sample point 2: {'scaling': 1.0, 'steamer_capacity': 11.0, 'generator_capacity': -100.0, 'electr_market_capacity': -2.0, 'electr_flex_capacity': -2043.0338741, 'denoises': 3}
+(    1.31 sec) STEP MULTIRUN            : DEBUG           ->  ... no available JobHandler spots currently (or the Sampler is done.)
+(    1.32 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model Price
+(7174011.37 sec) Interp. Cluster ROM      : DEBUG           -> Evaluating interpolated ROM ...
+(7174011.37 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "10" (1 / 3)
+(7174011.37 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "11" (2 / 3)
+(7174011.38 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "12" (3 / 3)
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+(    1.36 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model dispatch
+(            ) UTILS                    : Message         -> importing module C:\Users\antho\Documents\projects\optimization_settings\transfers
+RUNNING HERON DISPATCH MANAGER
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.08499598503112793 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.07599353790283203 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.09127330780029297 s
+****************************************
+* Starting final cashflow calculations *
+****************************************
+DEBUGG CASHFLOWS
+ ... comp steamer ...
+ ... comp generator ...
+ ... comp electr_market ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.  14.  14.  14.]
+ ... comp electr_flex ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.          17.12802245  17.12802245  17.12802245]
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_market" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_flex" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+****************************************
+DEBUGG final cashflow metrics:
+   NPV 80.2199328766
+****************************************
+(    1.68 sec) STEP MULTIRUN            : Message         -> Just collected job 2 and sent to output "arma_metrics"
+(    1.68 sec) STEP MULTIRUN            : DEBUG           -> Testing if the sampler is ready to generate a new input
+(    1.68 sec) SAMPLER MONTECARLO       : DEBUG           -> Sampling limit reached!
+(    1.68 sec) SAMPLER MONTECARLO       : DEBUG           ->  ... Sample point 3: {'scaling': 1.0, 'steamer_capacity': 11.0, 'generator_capacity': -100.0, 'electr_market_capacity': -2.0, 'electr_flex_capacity': -2043.0338741, 'denoises': 3}
+(    1.68 sec) STEP MULTIRUN            : DEBUG           ->  ... no available JobHandler spots currently (or the Sampler is done.)
+(    1.70 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model Price
+(7174011.75 sec) Interp. Cluster ROM      : DEBUG           -> Evaluating interpolated ROM ...
+(7174011.75 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "10" (1 / 3)
+(7174011.75 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "11" (2 / 3)
+(7174011.76 sec) Interp. Cluster ROM      : DEBUG           ->  ... evaluating macro step "12" (3 / 3)
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+(    1.73 sec) EnsembleModel MODEL      : DEBUG           -> Submitting model dispatch
+(            ) UTILS                    : Message         -> importing module C:\Users\antho\Documents\projects\optimization_settings\transfers
+RUNNING HERON DISPATCH MANAGER
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.09000158309936523 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.07513070106506348 s
+DEBUGG starting window 0 to 21
+DEBUGG solve attempt 1 ...:
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:1758: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  rlz = self._data[{self.sampleTag:index}].drop(self.sampleTag).data_vars
+DEBUGG ... solve was successful!
+DEBUGG ... validating ...
+DEBUGG Solve successful and no validation concerns raised.
+DEBUGG solve time: 0.08476543426513672 s
+****************************************
+* Starting final cashflow calculations *
+****************************************
+DEBUGG CASHFLOWS
+ ... comp steamer ...
+ ... comp generator ...
+ ... comp electr_market ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.  14.  14.  14.]
+ ... comp electr_flex ...
+ ... ... cf e_sales ...
+ ... ... ... D: None
+ ... ... ... a: None
+ ... ... ... Dp: None
+ ... ... ... x: 1.0
+ ... ... ... hourly: [  0.          17.12802245  17.12802245  17.12802245]
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_market" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.400000000e+01
+CashFlow INFO (compLife): ---------------------------------------------------------------------------
+CashFlow INFO (compLife): Computing LIFETIME cash flow for Component "electr_flex" CashFlow "e_sales" ...
+CashFlow INFO (compLife): LIFETIME cash flow summary by year:
+CashFlow INFO (compLife):     year,   alpha   ,   driver  ,    cashflow    
+CashFlow INFO (compLife):      0  , -- N/A -- , -- N/A -- ,  0.000000000e+00
+CashFlow INFO (compLife):      1  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      2  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+CashFlow INFO (compLife):      3  , -- N/A -- , -- N/A -- ,  1.712802245e+01
+****************************************
+DEBUGG final cashflow metrics:
+   NPV 80.2199328766
+****************************************
+(    2.07 sec) STEP MULTIRUN            : Message         -> Just collected job 3 and sent to output "arma_metrics"
+(    2.07 sec) STEP MULTIRUN            : DEBUG           -> Testing if the sampler is ready to generate a new input
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> Sampling limit reached! No new samples ...
+(    2.07 sec) STEP MULTIRUN            : DEBUG           ->  ... sampler has no new inputs currently.
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> Sampling limit reached! No new samples ...
+(    2.07 sec) STEP MULTIRUN            : DEBUG           -> Sampling finished with 3 runs submitted, 0 jobs running, and 0 completed jobs waiting to be processed.
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> ===============
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> | RUN SUMMARY |
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> ===============
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> All runs completed without returning errors.
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> ===============
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           ->   END SUMMARY  
+(    2.07 sec) SAMPLER MONTECARLO       : DEBUG           -> ===============
+(    2.07 sec) STEP MULTIRUN            : Message         -> ***       Run finished        ***
+(    2.07 sec) STEP MULTIRUN            : Message         -> ***     Closing the step      ***
+(    2.07 sec) STEP MULTIRUN            : Message         -> ***        Step closed        ***
+(    2.07 sec) SIMULATION               : Message         -> -- End step arma_sampling of type: MultiRun --
+
+(    2.07 sec) SIMULATION               : Message         -> -- Beginning PostProcess step "summarize" ... --
+(    2.07 sec) STEP SINGLERUN           : Message         -> ***  Beginning initialization ***
+(    2.07 sec) STEP SINGLERUN           : DEBUG           -> jobHandler initialized
+(    2.07 sec) STEP SINGLERUN           : DEBUG           -> for the role Model, the item of class PostProcessor and name statistics has been initialized
+(    2.07 sec) STEP SINGLERUN           : DEBUG           -> for the role Output the item of class PointSet and name metrics_stats has been initialized
+(    2.07 sec) STEP SINGLERUN           : Message         -> ***    Initialization done    ***
+(    2.07 sec) STEP SINGLERUN           : Message         -> ***       Beginning run       ***
+(    2.13 sec) PointSet                 : DEBUG           -> Had an issue with setting scaling factors for variable "prefix". No big deal.
+(    2.13 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting "expectedValue"...
+(    2.15 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting "variance"...
+(    2.17 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting "sigma"...
+(    2.17 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting "median"...
+(    2.19 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting calculate standard error on"expectedValue"...
+(    2.19 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting calculate standard error on "variance"...
+(    2.19 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting calculate standard error on "sigma"...
+(    2.20 sec) PostProcessor ECONOMIC RA: DEBUG           -> Starting calculate standard error on "median"...
+(    2.29 sec) PostProcessor ECONOMIC RA: DEBUG           -> Dumping output in data object named metrics_stats
+(    2.29 sec) STEP SINGLERUN           : Message         -> ***       Run finished        ***
+(    2.29 sec) STEP SINGLERUN           : Message         -> ***     Closing the step      ***
+(    2.29 sec) STEP SINGLERUN           : Message         -> ***        Step closed        ***
+(    2.29 sec) SIMULATION               : Message         -> -- End step summarize of type: PostProcess --
+
+(    2.29 sec) SIMULATION               : Message         -> -- Beginning IOStep step "database" ... --
+(    2.29 sec) STEP IOCOMBINED          : Message         -> ***  Beginning initialization ***
+(    2.29 sec) STEP IOCOMBINED          : DEBUG           -> jobHandler initialized
+(    2.29 sec) STEP IOCOMBINED          : DEBUG           -> for the role Output the item of class Print and name disp_results has been initialized
+(    2.29 sec) STEP IOCOMBINED          : Message         -> ***    Initialization done    ***
+(    2.29 sec) STEP IOCOMBINED          : Message         -> ***       Beginning run       ***
+C:\Users\antho\Documents\projects\raven\ravenframework\DataObjects\DataSet.py:2104: DeprecationWarning: dropping variables using `drop` is deprecated; use drop_vars.
+  data = data.drop(toDrop, errors='ignore')
+(    2.47 sec) PointSet                 : DEBUG           -> Printing data from "metrics_stats" to CSV: "disp_results.csv"
+(    2.48 sec) PointSet                 : DEBUG           -> Printing metadata XML: "disp_results.xml"
+(    2.48 sec) STEP IOCOMBINED          : Message         -> ***       Run finished        ***
+(    2.48 sec) STEP IOCOMBINED          : Message         -> ***     Closing the step      ***
+(    2.48 sec) STEP IOCOMBINED          : Message         -> ***        Step closed        ***
+(    2.48 sec) SIMULATION               : Message         -> -- End step database of type: IOStep --
+
+--------------------------------------------------
+There were 2 warnings during the simulation run:
+(1 time) <class 'DeprecationWarning'> "variables" node inputted but has been deprecated!  Please list variables in the "inputs" and "outputs" nodes instead.  This Warning will result in an error in RAVEN 3.0!
+(1 time) Nothing to write to CSV! Checking metadata ...
+--------------------------------------------------
+(    2.49 sec) SIMULATION               : DEBUG           -> Mon Dec 25 19:37:34 2023
+(    2.49 sec) SIMULATION               : Message         -> Run complete!
+

@@ -1,0 +1,11 @@
+<DataObjectMetadata name="opt_soln">
+  <DataSet type="Static">
+    <general>
+      <datasetName>opt_soln</datasetName>
+      <inputs>trajID</inputs>
+      <outputs>iteration,accepted,steamer_capacity,generator_capacity,electr_market_capacity,electr_flex_capacity,mean_NPV,std_NPV,med_NPV,mean_TotalActivity__steamer__production__steam,mean_TotalActivity__generator__production__electricity,mean_TotalActivity__generator__production__steam,mean_TotalActivity__electr_market__production__electricity,mean_TotalActivity__electr_flex__production__electricity,std_TotalActivity__steamer__production__steam,std_TotalActivity__generator__production__electricity,std_TotalActivity__generator__production__steam,std_TotalActivity__electr_market__production__electricity,std_TotalActivity__electr_flex__production__electricity,med_TotalActivity__steamer__production__steam,med_TotalActivity__generator__production__electricity,med_TotalActivity__generator__production__steam,med_TotalActivity__electr_market__production__electricity,med_TotalActivity__electr_flex__production__electricity,modelRuns,stepSize,rejectReason,conv_gradient,conv_samePoint,conv_objective</outputs>
+      <sampleTag>RAVEN_sample_ID</sampleTag>
+    </general>
+  </DataSet>
+  
+</DataObjectMetadata>

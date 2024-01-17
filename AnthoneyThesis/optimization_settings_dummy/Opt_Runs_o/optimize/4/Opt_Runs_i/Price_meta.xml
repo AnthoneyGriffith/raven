@@ -1,0 +1,91 @@
+<DataObjectMetadata name="Price_meta">
+  <Price type="Static">
+    <ROM>
+      <type>Interp. Cluster ROM</type>
+      <Features>scaling</Features>
+      <Targets>Signal,Time</Targets>
+    </ROM>
+    <InterpolatedMultiyearROM type="Static">
+      <MacroParameterID>Year</MacroParameterID>
+      <MacroSteps>3</MacroSteps>
+      <MacroFirstStep>10</MacroFirstStep>
+      <MacroLastStep>12</MacroLastStep>
+    </InterpolatedMultiyearROM>
+    <MacroStepROM Year="10" type="Static">
+      <GlobalROM segment="all" type="Static" />
+      <ClusterROM type="Static" cluster="0">
+        <Fourier>
+          <Signal>
+            <fit_intercept>2.541589716e-10</fit_intercept>
+            <waveform period="1.000000000e+01" frequency="1.000000000e-01">
+              <amplitude>9.999999996e-01</amplitude>
+              <phase>-2.295830194e-12</phase>
+            </waveform>
+          </Signal>
+        </Fourier>
+        <Gaussianize>
+          <Signal />
+        </Gaussianize>
+        <ARMA>
+          <Signal>
+            <constant>-5.199342407e+00</constant>
+            <variance>1.096763653e-11</variance>
+          </Signal>
+        </ARMA>
+        <segments_represented>0</segments_represented>
+        <indices>0, 21</indices>
+      </ClusterROM>
+    </MacroStepROM>
+    <MacroStepROM Year="12" type="Static">
+      <GlobalROM segment="all" type="Static" />
+      <ClusterROM type="Static" cluster="0">
+        <Fourier>
+          <Signal>
+            <fit_intercept>2.541589716e-10</fit_intercept>
+            <waveform period="1.000000000e+01" frequency="1.000000000e-01">
+              <amplitude>9.999999996e-01</amplitude>
+              <phase>-2.295830194e-12</phase>
+            </waveform>
+          </Signal>
+        </Fourier>
+        <Gaussianize>
+          <Signal />
+        </Gaussianize>
+        <ARMA>
+          <Signal>
+            <constant>-5.199342407e+00</constant>
+            <variance>1.096763653e-11</variance>
+          </Signal>
+        </ARMA>
+        <segments_represented>0</segments_represented>
+        <indices>0, 21</indices>
+      </ClusterROM>
+    </MacroStepROM>
+    <MacroStepROM Year="11" type="Static">
+      <GlobalROM segment="all" type="Static" />
+      <ClusterROM type="Static" cluster="0">
+        <Fourier>
+          <Signal>
+            <fit_intercept>2.541589716e-10</fit_intercept>
+            <waveform period="1.000000000e+01" frequency="1.000000000e-01">
+              <amplitude>9.999999996e-01</amplitude>
+              <phase>-2.295830194e-12</phase>
+            </waveform>
+          </Signal>
+        </Fourier>
+        <Gaussianize>
+          <Signal />
+        </Gaussianize>
+        <ARMA>
+          <Signal>
+            <constant>-5.199342407e+00</constant>
+            <variance>1.096763653e-11</variance>
+          </Signal>
+        </ARMA>
+        <segments_represented>0</segments_represented>
+        <indices>0, 21</indices>
+      </ClusterROM>
+    </MacroStepROM>
+  </Price>
+  
+</DataObjectMetadata>

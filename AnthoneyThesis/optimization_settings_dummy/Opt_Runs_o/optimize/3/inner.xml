@@ -1,0 +1,193 @@
+<?xml version="1.0" ?>
+<Simulation verbosity="debug">
+	<RunInfo>
+		<JobName>Opt_Runs_i</JobName>
+		<WorkingDir>Opt_Runs_i</WorkingDir>
+		<Sequence>read_Price, print_meta_Price, arma_sampling, summarize, database</Sequence>
+		<batchSize>1</batchSize>
+	</RunInfo>
+	<Steps>
+		<MultiRun name="arma_sampling">
+			<Input class="DataObjects" type="PointSet">dispatch_placeholder</Input>
+			<Model class="Models" type="EnsembleModel">sample_and_dispatch</Model>
+			<Sampler class="Samplers" type="MonteCarlo">mc_arma_dispatch</Sampler>
+			<Output class="DataObjects" type="DataSet">arma_metrics</Output>
+		</MultiRun>
+		<IOStep name="write_full">
+			<Input class="DataObjects" type="DataSet">disp_full</Input>
+			<Output class="Databases" type="NetCDF">disp_full</Output>
+		</IOStep>
+		<PostProcess name="summarize">
+			<Input class="DataObjects" type="PointSet">arma_metrics</Input>
+			<Model class="Models" type="PostProcessor">statistics</Model>
+			<Output class="DataObjects" type="PointSet">metrics_stats</Output>
+		</PostProcess>
+		<IOStep name="database">
+			<Input class="DataObjects" type="PointSet">metrics_stats</Input>
+			<Output class="OutStreams" type="Print">disp_results</Output>
+		</IOStep>
+		<IOStep name="read_Price">
+			<Input class="Files" type="">C:\Users\antho\Documents\projects\HERON\tests\integration_tests\TSA\Sine\arma.pk</Input>
+			<Output class="Models" type="ROM">Price</Output>
+		</IOStep>
+		<IOStep name="print_meta_Price">
+			<Input class="Models" type="ROM">Price</Input>
+			<Output class="DataObjects" type="PointSet">Price_meta</Output>
+			<Output class="OutStreams" type="Print">Price_meta</Output>
+		</IOStep>
+	</Steps>
+	<VariableGroups>
+		<Group name="GRO_dispatch">GRO_dispatch_in, GRO_dispatch_out, _ROM_Cluster, Time, Year</Group>
+		<Group name="GRO_dispatch_in">GRO_dispatch_in_scalar, GRO_dispatch_in_Time</Group>
+		<Group name="GRO_dispatch_out">NPV, TotalActivity__steamer__production__steam, TotalActivity__generator__production__electricity, TotalActivity__generator__production__steam, TotalActivity__electr_market__production__electricity, TotalActivity__electr_flex__production__electricity</Group>
+		<Group name="GRO_dispatch_in_scalar">GRO_capacities, scaling</Group>
+		<Group name="GRO_dispatch_in_Time">Signal</Group>
+		<Group name="GRO_armasamples">GRO_armasamples_in, GRO_armasamples_out</Group>
+		<Group name="GRO_armasamples_in">GRO_armasamples_in_scalar</Group>
+		<Group name="GRO_armasamples_out">GRO_armasamples_out_scalar</Group>
+		<Group name="GRO_armasamples_in_scalar">scaling, GRO_capacities</Group>
+		<Group name="GRO_armasamples_out_scalar">NPV, TotalActivity__steamer__production__steam, TotalActivity__generator__production__electricity, TotalActivity__generator__production__steam, TotalActivity__electr_market__production__electricity, TotalActivity__electr_flex__production__electricity</Group>
+		<Group name="GRO_final_return">mean_NPV, std_NPV, med_NPV, mean_TotalActivity__steamer__production__steam, mean_TotalActivity__generator__production__electricity, mean_TotalActivity__generator__production__steam, mean_TotalActivity__electr_market__production__electricity, mean_TotalActivity__electr_flex__production__electricity, std_TotalActivity__steamer__production__steam, std_TotalActivity__generator__production__electricity, std_TotalActivity__generator__production__steam, std_TotalActivity__electr_market__production__electricity, std_TotalActivity__electr_flex__production__electricity, med_TotalActivity__steamer__production__steam, med_TotalActivity__generator__production__electricity, med_TotalActivity__generator__production__steam, med_TotalActivity__electr_market__production__electricity, med_TotalActivity__electr_flex__production__electricity</Group>
+		<Group name="GRO_full_dispatch">Dispatch__steamer__production__steam, Dispatch__generator__production__electricity, Dispatch__generator__production__steam, Dispatch__electr_market__production__electricity, Dispatch__electr_flex__production__electricity</Group>
+		<Group name="GRO_cashflows"/>
+		<Group name="GRO_full_dispatch_indices">Time, Year</Group>
+		<Group name="GRO_interp">stepwise</Group>
+		<Group name="GRO_capacities">steamer_capacity, generator_capacity, electr_market_capacity, electr_flex_capacity</Group>
+		<Group name="GRO_init_disp">Dispatch__steamer__production__steam, Dispatch__generator__production__electricity, Dispatch__generator__production__steam, Dispatch__electr_market__production__electricity, Dispatch__electr_flex__production__electricity</Group>
+	</VariableGroups>
+	<DataObjects>
+		<DataSet name="arma_samples">
+			<Input>GRO_armasamples_in</Input>
+			<Output>GRO_armasamples_out</Output>
+		</DataSet>
+		<PointSet name="arma_metrics">
+			<Output>NPV, TotalActivity__steamer__production__steam, TotalActivity__generator__production__electricity, TotalActivity__generator__production__steam, TotalActivity__electr_market__production__electricity, TotalActivity__electr_flex__production__electricity</Output>
+		</PointSet>
+		<PointSet name="metrics_stats">
+			<Output>GRO_final_return</Output>
+		</PointSet>
+		<DataSet name="disp_full">
+			<Output>GRO_full_dispatch, GRO_dispatch, GRO_cashflows</Output>
+			<Index var="Time">GRO_full_dispatch, GRO_dispatch_in_Time</Index>
+			<Index var="Year">GRO_full_dispatch, GRO_dispatch_in_Time</Index>
+			<Index var="_ROM_Cluster">GRO_full_dispatch, GRO_dispatch_in_Time</Index>
+			<Index var="cfYears">GRO_cashflows</Index>
+		</DataSet>
+		<DataSet name="dispatch_eval">
+			<Input>GRO_dispatch_in</Input>
+			<Index var="Time">GRO_dispatch_in_Time</Index>
+			<Index var="Year">GRO_dispatch_in_Time</Index>
+			<Index var="_ROM_Cluster">GRO_dispatch_in_Time</Index>
+		</DataSet>
+		<PointSet name="dispatch_placeholder">
+			<Input>GRO_dispatch_in_scalar</Input>
+		</PointSet>
+		<DataSet name="Price_meta"/>
+		<PointSet name="Price_placeholder">
+			<Input>scaling</Input>
+		</PointSet>
+		<DataSet name="Price_samples">
+			<Input>scaling</Input>
+			<Output>Signal</Output>
+			<Index var="Time">Signal</Index>
+			<Index var="Year">Signal</Index>
+			<Index var="_ROM_Cluster">Signal</Index>
+		</DataSet>
+	</DataObjects>
+	<Databases>
+		<NetCDF name="disp_results" readMode="overwrite" directory=""/>
+		<NetCDF name="disp_full" readMode="overwrite" directory=""/>
+	</Databases>
+	<Models>
+		<ExternalModel name="dispatch" subType="HERON.DispatchManager">
+			<variables>GRO_dispatch, GRO_armasamples</variables>
+		</ExternalModel>
+		<EnsembleModel name="sample_and_dispatch" subType="">
+			<Model class="Models" type="ExternalModel">
+				dispatch
+				<Input class="DataObjects" type="PointSet">dispatch_placeholder</Input>
+				<TargetEvaluation class="DataObjects" type="DataSet">dispatch_eval</TargetEvaluation>
+			</Model>
+			<Model class="Models" type="ROM">
+				Price
+				<Input class="DataObjects" type="PointSet">Price_placeholder</Input>
+				<TargetEvaluation class="DataObjects" type="DataSet">Price_samples</TargetEvaluation>
+			</Model>
+		</EnsembleModel>
+		<PostProcessor name="statistics" subType="EconomicRatio">
+			<expectedValue prefix="mean">TotalActivity__steamer__production__steam</expectedValue>
+			<sigma prefix="std">TotalActivity__steamer__production__steam</sigma>
+			<median prefix="med">TotalActivity__steamer__production__steam</median>
+			<expectedValue prefix="mean">TotalActivity__generator__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__generator__production__electricity</sigma>
+			<median prefix="med">TotalActivity__generator__production__electricity</median>
+			<expectedValue prefix="mean">TotalActivity__generator__production__steam</expectedValue>
+			<sigma prefix="std">TotalActivity__generator__production__steam</sigma>
+			<median prefix="med">TotalActivity__generator__production__steam</median>
+			<expectedValue prefix="mean">TotalActivity__electr_market__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__electr_market__production__electricity</sigma>
+			<median prefix="med">TotalActivity__electr_market__production__electricity</median>
+			<expectedValue prefix="mean">TotalActivity__electr_flex__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__electr_flex__production__electricity</sigma>
+			<median prefix="med">TotalActivity__electr_flex__production__electricity</median>
+			<expectedValue prefix="mean">NPV</expectedValue>
+			<sigma prefix="std">NPV</sigma>
+			<median prefix="med">NPV</median>
+			<expectedValue prefix="mean">TotalActivity__steamer__production__steam</expectedValue>
+			<sigma prefix="std">TotalActivity__steamer__production__steam</sigma>
+			<median prefix="med">TotalActivity__steamer__production__steam</median>
+			<expectedValue prefix="mean">TotalActivity__generator__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__generator__production__electricity</sigma>
+			<median prefix="med">TotalActivity__generator__production__electricity</median>
+			<expectedValue prefix="mean">TotalActivity__generator__production__steam</expectedValue>
+			<sigma prefix="std">TotalActivity__generator__production__steam</sigma>
+			<median prefix="med">TotalActivity__generator__production__steam</median>
+			<expectedValue prefix="mean">TotalActivity__electr_market__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__electr_market__production__electricity</sigma>
+			<median prefix="med">TotalActivity__electr_market__production__electricity</median>
+			<expectedValue prefix="mean">TotalActivity__electr_flex__production__electricity</expectedValue>
+			<sigma prefix="std">TotalActivity__electr_flex__production__electricity</sigma>
+			<median prefix="med">TotalActivity__electr_flex__production__electricity</median>
+		</PostProcessor>
+		<ROM name="Price" subType="pickledROM">
+			<maxCycles>3</maxCycles>
+			<clusterEvalMode>clustered</clusterEvalMode>
+		</ROM>
+	</Models>
+	<Files>
+		<Input name="libs">heron.lib</Input>
+		<Input name="C:\Users\antho\Documents\projects\HERON\tests\integration_tests\TSA\Sine\arma.pk">arma.pk</Input>
+	</Files>
+	<Samplers>
+		<MonteCarlo name="mc_arma_dispatch">
+			<samplerInit>
+				<initialSeed>42</initialSeed>
+				<limit>3</limit>
+			</samplerInit>
+			<constant name="scaling">1.0</constant>
+			<constant name="steamer_capacity">7.890848605691077</constant>
+			<constant name="generator_capacity">-100.0</constant>
+			<constant name="electr_market_capacity">-2.0</constant>
+			<constant name="electr_flex_capacity">-2042.89245275</constant>
+			<constant name="denoises">3</constant>
+		</MonteCarlo>
+	</Samplers>
+	<Databases>
+		<NetCDF name="disp_debug" readMode="overwrite" directory=""/>
+		<NetCDF name="disp_results" readMode="overwrite" directory=""/>
+	</Databases>
+	<OutStreams>
+		<Print name="disp_debug">
+			<type>csv</type>
+			<source>arma_samples</source>
+		</Print>
+		<Print name="disp_results">
+			<type>csv</type>
+			<source>metrics_stats</source>
+		</Print>
+		<Print name="Price_meta">
+			<type>csv</type>
+			<source>Price_meta</source>
+		</Print>
+	</OutStreams>
+</Simulation>
