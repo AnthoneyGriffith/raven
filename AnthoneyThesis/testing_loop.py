@@ -43,6 +43,7 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
 
     # Looping over sample runs
     for samp in range(sample_count):
+        print(f'Running trial {samp+1}...')
         # If to avoid running on crappy windows for now
         if plat.system() != 'Windows':
             os.system(raven_command)
