@@ -24,7 +24,7 @@ import numpy as np
 import platform as plat
 import subprocess as sub
 
-def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
+def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir, heron_dir):
     """
         Runs Raven in a loop for the sake of generating and storing runs for cumulative comparison.
         Changes initial optimization points between runs and is meant to use 'thesis' branch of
@@ -34,15 +34,23 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
         @ In, csv_dir, str, location to save csv files to
         @ In, sample_count, number of samples to run analysis for
         @ In, solution_dir, name of csv where solutions are stored
+        @ In, heron_dir, name of heron input to run to set synthetic history model
     """
     # Adding raven running script to raven directory, correcting paths
     os_home = os.path.expanduser("~")
     raven = raven.replace("~", os_home)
     outer_dir = outer_dir.replace("~", os_home)
     solution_dir = solution_dir.replace("~", os_home)
+    heron_dir = heron_dir.replace("~", os_home)
+
+    # Assumes a relative location for HERON
+    heron_command = raven + "..\HERON\heron " + heron_dir
     raven_command = raven + "raven_framework " + outer_dir
 
-    # Need to make sure correct raven executable is used in outer, this avoids having to run HERON
+    # Running HERON to update the inner details with correct directory for armas
+    os.system(heron_command)
+
+    # Need to make sure correct raven executable is used in outer
     addExecutableToOuter(raven, outer_dir)
 
     # Looping over sample runs
@@ -78,7 +86,7 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir):
 
 def addExecutableToOuter(raven, outer_file):
     """
-        Parses and updates outer file optimizer initial points
+        Parses and updates outer file necessary directories
         @ In, raven, str, absolute directory of raven
         @ In, outer_file, outer.xml to edit the initial points in optimization for
     """
@@ -93,7 +101,7 @@ def addExecutableToOuter(raven, outer_file):
         exit()
     raven_code = code[0]
     # Changing executable to correct thing
-    raven_code.find('executable').text = raven + '/raven_framework'
+    raven_code.find('executable').text = raven + 'raven_framework'
     # Updating outer file
     parsed.write(outer_file)
 
