@@ -44,7 +44,7 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir, heron_dir):
     heron_dir = heron_dir.replace("~", os_home)
 
     # Assumes a relative location for HERON
-    heron_command = raven + "..\HERON\heron " + heron_dir
+    heron_command = raven + "../HERON/heron " + heron_dir
     raven_command = raven + "raven_framework " + outer_dir
 
     # Running HERON to update the inner details with correct directory for armas
