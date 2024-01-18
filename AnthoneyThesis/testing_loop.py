@@ -143,4 +143,5 @@ if __name__ == '__main__':
     csv_dir = sys.argv[3]
     sample_count = int(sys.argv[4])
     solution_dir = sys.argv[5]
-    ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir)
+    heron_dir = sys.argv[6]
+    ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir, heron_dir)
