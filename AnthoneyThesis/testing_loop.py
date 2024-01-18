@@ -79,7 +79,7 @@ def ravenLoop(raven, outer_dir, csv_dir, sample_count, solution_dir, heron_dir):
 
         # Saving solution as next csv to store
         dataframe = pd.read_csv(solution_dir)
-        csv_loc = csv_dir + f'\Opt_{samp+1}.csv'
+        csv_loc = csv_dir + f'/Opt_{samp+1}.csv'
         dataframe.to_csv(csv_loc)
         
         updateOuterInitialPoints(outer_dir)
