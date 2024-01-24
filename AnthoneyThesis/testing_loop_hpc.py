@@ -47,7 +47,6 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
         # Update outer file for next trial
         trial_outer = updateOuter(outer_new, samp+1)
-        exit()
 
         # The raven command is then
         r_command = raven_loc + " " + trial_outer
