@@ -72,13 +72,13 @@ def rewriteHeronInput(heron_input, opt_params):
     # Looking for the case node
     case = parsed.find('Case')
     try:
-	parallel = case.find('parallel')
+	    parallel = case.find('parallel')
     except:
         parallel = tree.SubElement(case, 'parallel')
 
     if opt_params['Inner Optimization Cores'] is not None:
-	inner = tree.SubElement(parallel, 'inner')
-	inner.text = opt_params['Inner Optimization Cores']
+        inner = tree.SubElement(parallel, 'inner')
+        inner.text = opt_params['Inner Optimization Cores']
     out = tree.SubElement(parallel, 'outer')
     out.text = str(1)
 
