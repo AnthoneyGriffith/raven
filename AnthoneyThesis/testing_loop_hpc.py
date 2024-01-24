@@ -28,15 +28,15 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     # Need make new heron input with correct qsub parameters and arma directories
     new_heron = rewriteHeronInput(heron_input, opt_params)
     h_command = heron_loc + " " + new_heron
-    os.sys(h_command)
-
+    os.system(h_command)
+    exit()
     # Gotta find the outer file
     try:
         outer_slice = heron_input.rfind('/')
     except:
         outer_slice = heron_input.rfind('\\')
     outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
-    
+
     # Preprocess outer if it is BO, otherwise we gucci
     heron_parsed = tree.parse(new_heron)
     strat = heron_parsed.find('Case').find('strategy')
@@ -58,7 +58,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
         # The raven command is then
         r_command = raven_loc + " " + trial_outer
-        os.sys(r_command)
+        os.system(r_command)
 
 def rewriteHeronInput(heron_input, opt_params):
     """
@@ -72,14 +72,25 @@ def rewriteHeronInput(heron_input, opt_params):
     # Looking for the case node
     case = parsed.find('Case')
     try:
+	parallel = case.find('parallel')
+    except:
+        parallel = tree.SubElement(case, 'parallel')
+
+    if opt_params['Inner Optimization Cores'] is not None:
+	inner = tree.SubElement(parallel, 'inner')
+	inner.text = opt_params['Inner Optimization Cores']
+    out = tree.SubElement(parallel, 'outer')
+    out.text = str(1)
+
+    try:
         # Accessing the runinfo node
-        runinfo = case.find('runinfo')
+        runinfo = parallel.find('runinfo')
         # Various parameters to edit
         time = runinfo.find('expectedTime')
         params = runinfo.find('clusterParameters')
         memory = runinfo.find('memory')
     except:
-        runinfo = tree.SubElement(case,'runinfo')
+        runinfo = tree.SubElement(parallel,'runinfo')
         time = tree.SubElement(runinfo, 'expectedTime')
         params = tree.SubElement(runinfo, 'clusterParameters')
         memory = tree.SubElement(runinfo, 'memory')
@@ -214,6 +225,7 @@ if __name__ == '__main__':
     parser.add_argument("-a", "--acquisition", required=False, help='acquisition function for BO')
     parser.add_argument("-o", "--optimizer", required=False, help='BayesianOptimizer or GradientDescent')
     parser.add_argument("-n", "--name", required=True, help='Name of analysis')
+    parser.add_argument("-ip", "--innerparallel", required=False, help='Number of cores for inner optimization')
     args = parser.parse_args()
     opt_params = {'Analysis Name':args.name,
                   'Max Evaluations':args.evals,
@@ -221,5 +233,6 @@ if __name__ == '__main__':
                   'Memory':args.memory,
                   'Optimizer':args.optimizer,
                   'Kernel':args.kernel,
-                  'Acquisition':args.acquisition}
+                  'Acquisition':args.acquisition,
+                  'Inner Optimization Cores':args.innerparallel}
     ravenLoop(args.raven, args.heron, args.input, int(args.trials), opt_params)
