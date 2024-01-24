@@ -159,7 +159,7 @@ def preprocessOuter(outer_file, opt_params):
     # Optimizer objects of BO and GD treated slightly different
     # output = parsed.find('DataObjects').findall(".//PointSet/..[@name='opt_soln']")[0].find('Output')
     print(parsed.find('DataObjects'))
-    print(parsed.find('DataObjects').findall(".//PointSet/..[@name='opt_soln']"))
+    print(parsed.find('DataObjects').findall(".//PointSet/[@name='opt_soln']"))
     exit()
     opt = parsed.find("Optimizers")[0]
     if opt.tag != 'BayesianOptimizer':
