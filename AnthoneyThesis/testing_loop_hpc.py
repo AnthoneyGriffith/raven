@@ -157,7 +157,7 @@ def preprocessOuter(outer_file, opt_params):
     workingdir = parsed.find('RunInfo').find('WorkingDir')
     workingdir.text = workingdir.text + '_' + opt_params['Analysis Name']
     # Optimizer objects of BO and GD treated slightly different
-    output = parsed.find('DataObjects').findall(".//PointSet/..[@name='opt_soln']").find('Output')
+    output = parsed.find('DataObjects').findall(".//PointSet/..[@name='opt_soln']")[0].find('Output')
     opt = parsed.find("Optimizers")[0]
     if opt.tag != 'BayesianOptimizer':
         output.text = output.text + ', modelRuns, stepSize, rejectReason, conv_gradient, conv_samePoint, conv_objective'
