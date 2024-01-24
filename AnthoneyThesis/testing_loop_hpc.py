@@ -29,7 +29,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     new_heron = rewriteHeronInput(heron_input, opt_params)
     h_command = heron_loc + " " + new_heron
     os.system(h_command)
-    exit()
+
     # Gotta find the outer file
     try:
         outer_slice = heron_input.rfind('/')
@@ -55,6 +55,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
         # Update outer file for next trial
         trial_outer = updateOuter(outer_new)
+        exit()
 
         # The raven command is then
         r_command = raven_loc + " " + trial_outer
