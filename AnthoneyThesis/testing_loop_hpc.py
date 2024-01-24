@@ -37,16 +37,8 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         outer_slice = heron_input.rfind('\\')
     outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
 
-    # Preprocess outer if it is BO, otherwise we gucci
-    heron_parsed = tree.parse(new_heron)
-    strat = heron_parsed.find('Case').find('strategy')
-    if strat is not None:
-        if strat.text == 'BayesianOptimizer':
-            outer_new = preprocessOuter(outer_base, opt_params)
-        else:
-            outer_new = outer_base
-    else:
-        outer_new = outer_base
+    # Preprocess the outer file
+    outer_new = preprocessOuter(outer_base, opt_params)
 
     # Looping over sample runs
     for samp in range(sample_count):
@@ -140,6 +132,12 @@ def rewriteHeronInput(heron_input, opt_params):
     if '%BASE_WORKING_DIR%' in arma.text:
         arma.text = arma.text.replace('%BASE_WORKING_DIR%', '%BASE_WORKING_DIR%/..')
 
+    # Setting realization count and project life
+    if opt_params['Realizations'] is not None:
+        case.find('num_arma_samples').text = opt_params['Realizations']
+    if opt_params['Project Life'] is not None:
+        case.find('economics').find('ProjectTime').text = opt_params['Project Life']
+
     # Saving as a new heron input for just this trial
     input_extension = '_' + opt_params['Analysis Name'] + '.xml'
     new_input = heron_input.replace('.xml', input_extension)
@@ -154,18 +152,34 @@ def preprocessOuter(outer_file, opt_params):
         @ Out, new_outer, str, location of new outer.xml
     """
     # Step one is to parse
-    parsed = tree.parse(outer_file)
-    # Optimizer object
+    parsed = tree.parse(outer_file) 
+    # Change working directory name
+    workingdir = parsed.find('RunInfo').find('WorkingDir')
+    workingdir.text = workingdir.text + '_' + opt_params['Analysis Name']
+    # Optimizer objects of BO and GD treated slightly different
+    output = parsed.find('DataObjects').findall(".//PointSet/..[@name='opt_soln']").find('Output')
     opt = parsed.find("Optimizers")[0]
     if opt.tag != 'BayesianOptimizer':
-        print('There has been a failure in generating the correct outer.')
-        exit()
+        output.text = output.text + ', modelRuns, stepSize, rejectReason, conv_gradient, conv_samePoint, conv_objective'
+        extension = '_' + opt_params['Analysis Name'] + '.xml'
+        new_outer = outer_file.replace('.xml', extension)
+        parsed.write(new_outer)
+        return new_outer
+    # Changing outputs to have everything
+    output.text = output.text + ', solutionDeviation, rejectReason, modelRuns, radiusFromBest, radiusFromLast, solutionValue, acquisition'
+    # Adding initials to variables for analysis
     variables = opt.findall("variable")
     for var in variables:
         initial = tree.SubElement(var,'initial')
     # Remove sampler object
     opt.remove(opt.find('Sampler'))
 
+    # Editing seeding counts for suboptimization routines
+    if opt_params['Model Seeds'] is not None:
+        parsed.find('Models').findall(".//ROM/..[@name='gpROM']").find('n_restarts_optimizer').text = opt_params['Model Seeds']
+    if opt_params['Acquisition Seeds'] is not None:
+        opt.find('Acquisition')[0].find('seedingCount').text = opt_params['Acquisition Seeds']
+    
     # Resave outer as unique thing
     extension = '_' + opt_params['Analysis Name'] + '.xml'
     new_outer = outer_file.replace('.xml', extension)
@@ -228,6 +242,10 @@ if __name__ == '__main__':
     parser.add_argument("-o", "--optimizer", required=False, help='BayesianOptimizer or GradientDescent')
     parser.add_argument("-n", "--name", required=True, help='Name of analysis')
     parser.add_argument("-ip", "--innerparallel", required=False, help='Number of cores for inner optimization')
+    parser.add_argument("-re", "--realizations", required=False, help='Number of realizations for the TEA')
+    parser.add_argument("-pl", "--life", required=False, help='Number of years for project life')
+    parser.add_argument("-ms", "--modelseeds", required=False, help="Number of seedings for GPR model selection")
+    parser.add_argument("-as", "--acquisitionseeds", required=False, help='Number of seeds for acquisition optimization')
     args = parser.parse_args()
     opt_params = {'Analysis Name':args.name,
                   'Max Evaluations':args.evals,
@@ -236,5 +254,9 @@ if __name__ == '__main__':
                   'Optimizer':args.optimizer,
                   'Kernel':args.kernel,
                   'Acquisition':args.acquisition,
-                  'Inner Optimization Cores':args.innerparallel}
+                  'Inner Optimization Cores':args.innerparallel,
+                  'Realizations':args.realizations,
+                  'Project Life':args.life,
+                  'Model Seeds':args.modelseeds,
+                  'Acquisition Seeds':args.acquisitionseeds}
     ravenLoop(args.raven, args.heron, args.input, int(args.trials), opt_params)
