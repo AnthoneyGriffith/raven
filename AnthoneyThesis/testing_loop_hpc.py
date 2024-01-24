@@ -71,9 +71,8 @@ def rewriteHeronInput(heron_input, opt_params):
     parsed = tree.parse(heron_input)
     # Looking for the case node
     case = parsed.find('Case')
-    try:
-	    parallel = case.find('parallel')
-    except:
+    parallel = case.find('parallel')
+    if parallel is None:
         parallel = tree.SubElement(case, 'parallel')
 
     if opt_params['Inner Optimization Cores'] is not None:
@@ -82,17 +81,19 @@ def rewriteHeronInput(heron_input, opt_params):
     out = tree.SubElement(parallel, 'outer')
     out.text = str(1)
 
-    try:
-        # Accessing the runinfo node
-        runinfo = parallel.find('runinfo')
-        # Various parameters to edit
-        time = runinfo.find('expectedTime')
-        params = runinfo.find('clusterParameters')
-        memory = runinfo.find('memory')
-    except:
+    # Accessing the runinfo node
+    runinfo = parallel.find('runinfo')
+    if runinfo is None:
         runinfo = tree.SubElement(parallel,'runinfo')
+        # Various parameters to edit
+    time = runinfo.find('expectedTime')
+    params = runinfo.find('clusterParameters')
+    memory = runinfo.find('memory')
+    if time is None:
         time = tree.SubElement(runinfo, 'expectedTime')
+    if params is None:
         params = tree.SubElement(runinfo, 'clusterParameters')
+    if memory is None:
         memory = tree.SubElement(runinfo, 'memory')
     # Updating node inputs
     time.text = opt_params['Max Runtime']
