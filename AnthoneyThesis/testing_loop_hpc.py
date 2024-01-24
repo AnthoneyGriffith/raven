@@ -176,7 +176,7 @@ def preprocessOuter(outer_file, opt_params):
 
     # Editing seeding counts for suboptimization routines
     if opt_params['Model Seeds'] is not None:
-        parsed.find('Models').findall(".//ROM/..[@name='gpROM']").find('n_restarts_optimizer').text = opt_params['Model Seeds']
+        parsed.find('Models').findall(".//ROM/[@name='gpROM']")[0].find('n_restarts_optimizer').text = opt_params['Model Seeds']
     if opt_params['Acquisition Seeds'] is not None:
         opt.find('Acquisition')[0].find('seedingCount').text = opt_params['Acquisition Seeds']
     
