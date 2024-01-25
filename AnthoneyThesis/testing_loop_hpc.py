@@ -152,11 +152,6 @@ def rewriteHeronInput(heron_input, opt_params):
         else:
             print('Gradient Descent is being used, no ability to set options available yet')
 
-    # Since outers will have working dir one layer deeper for organization
-    arma = parsed.find('DataGenerators').find('ARMA')
-    if '%BASE_WORKING_DIR%' in arma.text:
-        arma.text = arma.text.replace('%BASE_WORKING_DIR%', '%BASE_WORKING_DIR%/..')
-
     # Setting realization count and project life
     if opt_params['Realizations'] is not None:
         case.find('num_arma_samples').text = opt_params['Realizations']
@@ -236,7 +231,7 @@ def updateOuter(outer_file, current_trial):
 
     # Updating solution export name in outstreams and steps
     opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
-    opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial+1)
+    opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial)
     output_step = parsed.find('Steps').find('MultiRun').findall(".//Output/[@class='OutStreams']")[0]
     output_step.text = opt_out.attrib['name']
 
