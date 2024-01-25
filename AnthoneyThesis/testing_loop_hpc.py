@@ -73,24 +73,41 @@ def rewriteHeronInput(heron_input, opt_params):
     out = tree.SubElement(parallel, 'outer')
     out.text = str(1)
 
+    # If running on hpc, include runinfo node
     # Accessing the runinfo node
     runinfo = parallel.find('runinfo')
-    if runinfo is None:
-        runinfo = tree.SubElement(parallel,'runinfo')
-        # Various parameters to edit
-    time = runinfo.find('expectedTime')
-    params = runinfo.find('clusterParameters')
-    memory = runinfo.find('memory')
-    if time is None:
-        time = tree.SubElement(runinfo, 'expectedTime')
-    if params is None:
-        params = tree.SubElement(runinfo, 'clusterParameters')
-    if memory is None:
-        memory = tree.SubElement(runinfo, 'memory')
-    # Updating node inputs
-    time.text = opt_params['Max Runtime']
-    params.text = '-P neup'
-    memory.text = opt_params['Memory']
+    if opt_params['HPC']:
+        # Accessing the runinfo node
+        runinfo = parallel.find('runinfo')
+        if runinfo is None:
+            runinfo = tree.SubElement(parallel,'runinfo')
+            # Various parameters to edit
+        time = runinfo.find('expectedTime')
+        params = runinfo.find('clusterParameters')
+        memory = runinfo.find('memory')
+        if time is None:
+            time = tree.SubElement(runinfo, 'expectedTime')
+        if params is None:
+            params = tree.SubElement(runinfo, 'clusterParameters')
+        if memory is None:
+            memory = tree.SubElement(runinfo, 'memory')
+        # Updating node inputs
+        time.text = opt_params['Max Runtime']
+        params.text = '-P neup'
+        memory.text = opt_params['Memory']
+    else:
+        if runinfo is not None:
+            time = runinfo.find('expectedTime')
+            if time is not None:
+                runinfo.remove(time)
+            params = runinfo.find('clusterParameters')
+            if params is not None:
+                runinfo.remove(params)
+            memory = runinfo.find('memory')
+            if memory is not None:
+                runinfo.remove(memory)
+            parallel.remove(runinfo)
+
     # Updating optimization settings
     opt_settings = case.find('optimization_settings')
     # Number limit for optimizer, setting persistence higher to avoid premature convergence
@@ -246,6 +263,7 @@ if __name__ == '__main__':
     # Parsing input arguments to use
     parser = arg.ArgumentParser()
     # Arguments available
+    parser.add_argument("-hpc", "--hpc", required=False, help='is this being ran through INL hpc? [y/n]')
     parser.add_argument("-r", "--raven", required=True, help='raven_framework file for running RAVEN')
     parser.add_argument("-he", "--heron", required=True, help='heron file for running HERON')
     parser.add_argument("-i", "--input", required=True, help='heron input file for TEA')
@@ -275,4 +293,11 @@ if __name__ == '__main__':
                   'Project Life':args.life,
                   'Model Seeds':args.modelseeds,
                   'Acquisition Seeds':args.acquisitionseeds}
+    if args.hpc is None or args.hpc == 'y':
+        opt_params.update({'HPC':True})
+    elif args.hpc == 'n':
+        opt_params.update({'HPC':False})
+    else:
+        print('Invalid input for arg -hpc')
+        exit()
     ravenLoop(args.raven, args.heron, args.input, int(args.trials), opt_params)
