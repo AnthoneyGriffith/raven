@@ -160,7 +160,7 @@ def preprocessOuter(outer_file, opt_params):
     # Removing plot from sequence, steps, outstreams, etc
     parsed.find('RunInfo').find('Sequence').text = 'optimize'
     parsed.find('Steps').remove(parsed.find('Steps').find('IOStep'))
-    parsed.find('Outstreams').remove(parsed.find('Outstreams').find('Plot'))
+    parsed.find('OutStreams').remove(parsed.find('OutStreams').find('Plot'))
 
     # Optimizer objects of BO and GD treated slightly different
     output = parsed.find('DataObjects').findall(".//PointSet/[@name='opt_soln']")[0].find('Output')
@@ -209,7 +209,7 @@ def updateOuter(outer_file, current_trial):
     var_dict = {}
 
     # Updating solution export name
-    opt_out = parsed.find('Outstreams').findall(".//Print/[@name='opt_soln']")[0]
+    opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
     opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial+1)
 
     # Retrieving variable information
