@@ -64,20 +64,20 @@ def rewriteHeronInput(heron_input, opt_params):
     # Looking for the case node
     case = parsed.find('Case')
     parallel = case.find('parallel')
-    if parallel is None:
-        parallel = tree.SubElement(case, 'parallel')
-
-    if opt_params['Inner Optimization Cores'] is not None:
-        inner = tree.SubElement(parallel, 'inner')
-        inner.text = opt_params['Inner Optimization Cores']
-    out = tree.SubElement(parallel, 'outer')
-    out.text = str(1)
-
-    # If running on hpc, include runinfo node
-    # Accessing the runinfo node
-    runinfo = parallel.find('runinfo')
     if opt_params['HPC']:
-        # Accessing the runinfo node
+        if parallel is None:
+            parallel = tree.SubElement(case, 'parallel')
+
+        if opt_params['Inner Optimization Cores'] is not None:
+            inner = parallel.find('inner')
+            if inner is None:
+                inner = tree.SubElement(parallel, 'inner')
+            inner.text = opt_params['Inner Optimization Cores']
+        out = parallel.find('outer')
+        if out is None: 
+            out = tree.SubElement(parallel, 'outer')
+        out.text = str(1)
+
         runinfo = parallel.find('runinfo')
         if runinfo is None:
             runinfo = tree.SubElement(parallel,'runinfo')
@@ -96,17 +96,26 @@ def rewriteHeronInput(heron_input, opt_params):
         params.text = '-P neup'
         memory.text = opt_params['Memory']
     else:
-        if runinfo is not None:
-            time = runinfo.find('expectedTime')
-            if time is not None:
-                runinfo.remove(time)
-            params = runinfo.find('clusterParameters')
-            if params is not None:
-                runinfo.remove(params)
-            memory = runinfo.find('memory')
-            if memory is not None:
-                runinfo.remove(memory)
-            parallel.remove(runinfo)
+        if parallel is not None:
+            inner = parallel.find('inner')
+            if inner is not None:
+                parallel.remove(inner)
+            outer = parallel.find('outer')
+            if outer is not None:
+                parallel.remove(outer)
+            runinfo = parallel.find('runinfo')
+            if runinfo is not None:
+                time = runinfo.find('expectedTime')
+                if time is not None:
+                    runinfo.remove(time)
+                params = runinfo.find('clusterParameters')
+                if params is not None:
+                    runinfo.remove(params)
+                memory = runinfo.find('memory')
+                if memory is not None:
+                    runinfo.remove(memory)
+                parallel.remove(runinfo)
+            case.remove(parallel)
 
     # Updating optimization settings
     opt_settings = case.find('optimization_settings')
