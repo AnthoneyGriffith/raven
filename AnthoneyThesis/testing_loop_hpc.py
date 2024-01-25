@@ -208,9 +208,11 @@ def updateOuter(outer_file, current_trial):
     dists = parsed.find("Distributions")
     var_dict = {}
 
-    # Updating solution export name
+    # Updating solution export name in outstreams and steps
     opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
     opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial+1)
+    output_step = parsed.find('Steps').find('MultiRun').findall(".//Output/[@class='OutStreams]")[0]
+    output_step.text = opt_out.attrib['name']
 
     # Retrieving variable information
     for dist in dists:
