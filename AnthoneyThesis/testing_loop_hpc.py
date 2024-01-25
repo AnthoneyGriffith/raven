@@ -174,9 +174,13 @@ def preprocessOuter(outer_file, opt_params):
     # Step one is to parse
     parsed = tree.parse(outer_file) 
 
+    # Change base job name
+    jobname = parsed.find('RunInfo').find('JobName')
+    jobname.text = opt_params['Analysis Name']
+
     # Change working directory name
     workingdir = parsed.find('RunInfo').find('WorkingDir')
-    workingdir.text = workingdir.text + '_' + opt_params['Analysis Name']
+    workingdir.text = 'Opt_info' + '_' + opt_params['Analysis Name']
 
     # Removing plot from sequence, steps, outstreams, etc
     parsed.find('RunInfo').find('Sequence').text = 'optimize'
@@ -225,15 +229,23 @@ def updateOuter(outer_file, current_trial):
     # Parse the xml file
     parsed = tree.parse(outer_file)
 
+    # Update job name
+    jobname = parsed.find('RunInfo').find('JobName')
+    jobname.text = jobname.text + '_' + str(current_trial)
+
+    # New working directory so HPC doesn't yell at me anymore
+    workingDir = parsed.find('RunInfo').find('WorkingDir')
+    workingDir.text = workingDir.text + '_' + str(current_trial)
+
     # Distributions for variables
     dists = parsed.find("Distributions")
     var_dict = {}
 
-    # Updating solution export name in outstreams and steps
-    opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
-    opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial)
-    output_step = parsed.find('Steps').find('MultiRun').findall(".//Output/[@class='OutStreams']")[0]
-    output_step.text = opt_out.attrib['name']
+    # # Updating solution export name in outstreams and steps
+    # opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
+    # opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial)
+    # output_step = parsed.find('Steps').find('MultiRun').findall(".//Output/[@class='OutStreams']")[0]
+    # output_step.text = opt_out.attrib['name']
 
     # Retrieving variable information
     for dist in dists:
