@@ -152,9 +152,16 @@ def preprocessOuter(outer_file, opt_params):
     """
     # Step one is to parse
     parsed = tree.parse(outer_file) 
+
     # Change working directory name
     workingdir = parsed.find('RunInfo').find('WorkingDir')
     workingdir.text = workingdir.text + '_' + opt_params['Analysis Name']
+
+    # Removing plot from sequence, steps, outstreams, etc
+    parsed.find('RunInfo').find('Sequence').text = 'optimize'
+    parsed.find('Steps').remove(parsed.find('Steps').find('IOStep'))
+    parsed.find('Outstreams').remove(parsed.find('Outstreams').find('Plot'))
+
     # Optimizer objects of BO and GD treated slightly different
     output = parsed.find('DataObjects').findall(".//PointSet/[@name='opt_soln']")[0].find('Output')
     opt = parsed.find("Optimizers")[0]
@@ -166,10 +173,12 @@ def preprocessOuter(outer_file, opt_params):
         return new_outer
     # Changing outputs to have everything
     output.text = output.text + ', solutionDeviation, rejectReason, modelRuns, radiusFromBest, radiusFromLast, solutionValue, acquisition'
+
     # Adding initials to variables for analysis
     variables = opt.findall("variable")
     for var in variables:
         initial = tree.SubElement(var,'initial')
+
     # Remove sampler object
     opt.remove(opt.find('Sampler'))
 
@@ -194,9 +203,15 @@ def updateOuter(outer_file, current_trial):
     """
     # Parse the xml file
     parsed = tree.parse(outer_file)
+
     # Distributions for variables
     dists = parsed.find("Distributions")
     var_dict = {}
+
+    # Updating solution export name
+    opt_out = parsed.find('Outstreams').findall(".//Print/[@name='opt_soln']")[0]
+    opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial+1)
+
     # Retrieving variable information
     for dist in dists:
         name = dist.attrib['name']
@@ -210,6 +225,7 @@ def updateOuter(outer_file, current_trial):
                 continue
             bounds[index] = float(bound.text)
         var_dict.update({name:bounds})
+
     # Optimizer objects
     opt = parsed.find("Optimizers")[0]
     variables = opt.findall("variable")
@@ -217,9 +233,8 @@ def updateOuter(outer_file, current_trial):
         nametag = var.attrib['name'] + '_dist'
         sampling_bound = var_dict[nametag]
         var.find('initial').text = str(np.random.uniform(low=sampling_bound[0], high=sampling_bound[1]))
-    # Update working directory
-    working_dir = parsed.find('RunInfo').find('WorkingDir')
-    working_dir.text = working_dir.text + '/OptRun' + str(current_trial)
+   
+    # Rename outer for current trial
     extension = '_' + str(current_trial) + '.xml'
     new_outer = outer_file.replace('.xml', extension)
     parsed.write(new_outer)
