@@ -125,7 +125,11 @@ def rewriteHeronInput(heron_input, opt_params):
     except:
         limit = tree.SubElement(opt_settings, 'limit')
         limit.text = opt_params['Max Evaluations']
-    opt_settings.find('persistence').text = str(int(opt_params['Max Evaluations'])+1)
+    try:
+        opt_settings.find('persistence').text = str(int(opt_params['Max Evaluations'])+1)
+    except:
+        persist = tree.SubElement(opt_settings, 'persistence')
+        persist.text = str(int(opt_params['Max Evaluations'])+1)
     # If optimizer is provided in args, set strategy
     if opt_params['Optimizer'] is not None:
         try:
