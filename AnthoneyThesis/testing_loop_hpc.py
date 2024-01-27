@@ -39,8 +39,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
     # Preprocess the outer file
     outer_new = preprocessOuter(outer_base, opt_params)
-    print(outer_new)
-    exit()
+    
     # Looping over sample runs
     for samp in range(sample_count):
         # Just to see where we are at...
@@ -270,7 +269,7 @@ def preprocessOuter(outer_file, opt_params):
     else:
         print(f'Invalid acquisition function found: {acquisition.tag}')
         exit()
-        
+
     # Resave outer as unique thing
     extension = '_' + opt_params['Analysis Name'] + '.xml'
     new_outer = outer_file.replace('.xml', extension)
