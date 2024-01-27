@@ -217,7 +217,9 @@ def preprocessOuter(outer_file, opt_params):
     # If the acquisition function is PoI or LCB, need to set parameter behavior accordingly
     acquisition = opt.find('Acquisition')[0]
     tau_max = float(opt.find('samplerInit').find('limit').text)
-    # PoI exponentially decays eps param from 3 0.003 over course of iteration
+
+    # PoI exponentially decays eps param from 3 to 0.001 over course of max iterations,
+    # The start and end points are based off of recommendations by Jones (pg. 135 of Garnett)
     if acquisition.tag == 'ProbabilityOfImprovement':
         print('Setting appropriate transient behavior for Probability of Improvement')
         # Setting transient to exploit
@@ -233,7 +235,7 @@ def preprocessOuter(outer_file, opt_params):
             eps = tree.SubElement(acquisition, 'epsilon')
             eps.text = str(3)
         # Calculate and set rho
-        rho_val = np.multiply(-1,np.divide(tau_max, np.log(0.001)))
+        rho_val = np.multiply(-1,np.divide(tau_max, np.log((0.001/3))))
         try:
             acquisition.find('rho').text = str(rho_val)
         except:
@@ -241,12 +243,34 @@ def preprocessOuter(outer_file, opt_params):
             rho.text = str(rho_val)
 
     elif acquisition.tag == 'LowerConfidenceBound':
-        print('Under construction')
+        print('Setting appropriate transient behavior for Lower Confidence Bound')
+        # Setting transient to exploit
+        try:
+            acquisition.find('transient').text = 'Exploit'
+        except:
+            transient = tree.SubElement(acquisition, 'transient')
+            transient.text = 'Exploit'
+        # Setting initial value of pi
+        try:
+            acquisition.find('pi').text = str(0.999)
+        except:
+            pi = tree.SubElement(acquisition, 'pi')
+            pi.text = str(0.999)
+        # Calculating and setting rho
+        rho_val = np.multiply(-1,np.divide(tau_max, np.log((0.8/0.999))))
+        try:
+            acquisition.find('rho').text = str(rho_val)
+        except:
+            rho = tree.SubElement(acquisition, 'rho')
+            rho.text = str(rho_val)
+
     elif acquisition.tag == 'Expected Improvement':
         print('No necessary changes here for Expected Improvement')
+
     else:
         print(f'Invalid acquisition function found: {acquisition.tag}')
         exit()
+        
     # Resave outer as unique thing
     extension = '_' + opt_params['Analysis Name'] + '.xml'
     new_outer = outer_file.replace('.xml', extension)
