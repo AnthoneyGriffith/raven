@@ -39,7 +39,8 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
     # Preprocess the outer file
     outer_new = preprocessOuter(outer_base, opt_params)
-
+    print(outer_new)
+    exit()
     # Looping over sample runs
     for samp in range(sample_count):
         # Just to see where we are at...
@@ -213,6 +214,39 @@ def preprocessOuter(outer_file, opt_params):
     if opt_params['Acquisition Seeds'] is not None:
         opt.find('Acquisition')[0].find('seedingCount').text = opt_params['Acquisition Seeds']
     
+    # If the acquisition function is PoI or LCB, need to set parameter behavior accordingly
+    acquisition = opt.find('Acquisition')[0]
+    tau_max = float(opt.find('samplerInit').find('limit').text)
+    # PoI exponentially decays eps param from 3 0.003 over course of iteration
+    if acquisition.tag == 'ProbabilityOfImprovement':
+        print('Setting appropriate transient behavior for Probability of Improvement')
+        # Setting transient to exploit
+        try:
+            acquisition.find('transient').text = 'Exploit'
+        except:
+            transient = tree.SubElement(acquisition, 'transient')
+            transient.text = 'Exploit'
+        # Setting epsilon to 3
+        try:
+            acquisition.find('epsilon').text = str(3)
+        except:
+            eps = tree.SubElement(acquisition, 'epsilon')
+            eps.text = str(3)
+        # Calculate and set rho
+        rho_val = np.multiply(-1,np.divide(tau_max, np.log(0.001)))
+        try:
+            acquisition.find('rho').text = str(rho_val)
+        except:
+            rho = tree.SubElement(acquisition, 'rho')
+            rho.text = str(rho_val)
+
+    elif acquisition.tag == 'LowerConfidenceBound':
+        print('Under construction')
+    elif acquisition.tag == 'Expected Improvement':
+        print('No necessary changes here for Expected Improvement')
+    else:
+        print(f'Invalid acquisition function found: {acquisition.tag}')
+        exit()
     # Resave outer as unique thing
     extension = '_' + opt_params['Analysis Name'] + '.xml'
     new_outer = outer_file.replace('.xml', extension)

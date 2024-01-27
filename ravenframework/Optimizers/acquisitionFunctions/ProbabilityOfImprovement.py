@@ -20,6 +20,7 @@
 # External Modules
 import numpy as np
 from scipy.stats import norm
+import copy
 # External Modules
 
 # Internal Modules
@@ -137,9 +138,19 @@ class ProbabilityOfImprovement(AcquisitionFunction):
     # Evaluate posterior mean and standard deviation
     mu, s = bayesianOptimizer._evaluateRegressionModel(featurePoint)
 
+    # Pulling input data from BO instance
+    trainingInputs = copy.copy(bayesianOptimizer._trainingInputs[0])
+    for varName, array in trainingInputs.items():
+      trainingInputs[varName] = np.asarray(array)
+    # Evaluating the model at all training points
+    modelEvaluation = bayesianOptimizer._evaluateRegressionModel(trainingInputs)
+    # Pulling mean and std out of evaluation to operate on array structure
+    muVec = modelEvaluation[0]
+    r = np.max(muVec) - np.min(muVec)
+
     # Retrieve iteration and set epsilon for threshhold
     self._transient(bayesianOptimizer._iteration[0])
-    tau = fopt - self._epsilon
+    tau = fopt - (self._epsilon*r)
 
     # Is this evaluation vectorized?
     if vectorized:
