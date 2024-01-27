@@ -130,6 +130,7 @@ def rewriteHeronInput(heron_input, opt_params):
     except:
         persist = tree.SubElement(opt_settings, 'persistence')
         persist.text = str(int(opt_params['Max Evaluations'])+1)
+
     # If optimizer is provided in args, set strategy
     if opt_params['Optimizer'] is not None:
         try:
@@ -137,6 +138,7 @@ def rewriteHeronInput(heron_input, opt_params):
         except:
             strat = tree.SubElement(case, 'strategy')
             strat.text = opt_params['Optimizer']
+
     # Checking if BO
     strat = case.find('strategy')
     if strat is not None:
@@ -267,7 +269,7 @@ def preprocessOuter(outer_file, opt_params):
             rho = tree.SubElement(acquisition, 'rho')
             rho.text = str(rho_val)
 
-    elif acquisition.tag == 'Expected Improvement':
+    elif acquisition.tag == 'ExpectedImprovement':
         print('No necessary changes here for Expected Improvement')
 
     else:
