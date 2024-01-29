@@ -39,7 +39,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
 
     # If running through qsub, but don't want parallelization (in case of errors lol)
-    if opt_params['Inner Optimization Cores'] == 1 and opt_params['HPC']:
+    if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
         print(f'Removing parallelization from inner.xml...')
         time.sleep(opt_params['Delay'])
         inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
