@@ -7,6 +7,7 @@ import numpy as np
 import platform as plat
 import subprocess as sub
 import argparse as arg
+import time
 
 def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     """
@@ -51,6 +52,10 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         # The raven command is then
         r_command = raven_loc + " " + trial_outer
         os.system(r_command)
+
+        # Might want to wait before submitting next job
+        print(f'Waiting {opt_params["Delay"]} seconds before submitting next job... \n')
+        time.sleep(opt_params['Delay'])
 
 def rewriteHeronInput(heron_input, opt_params):
     """
@@ -359,6 +364,7 @@ if __name__ == '__main__':
     parser.add_argument("-pl", "--life", required=False, help='Number of years for project life')
     parser.add_argument("-ms", "--modelseeds", required=False, help="Number of seedings for GPR model selection")
     parser.add_argument("-as", "--acquisitionseeds", required=False, help='Number of seeds for acquisition optimization')
+    parser.add_argument("-d", "--delay", required=True, help='Pause between each job submission to HPC')
     args = parser.parse_args()
     opt_params = {'Analysis Name':args.name,
                   'Max Evaluations':args.evals,
@@ -371,7 +377,8 @@ if __name__ == '__main__':
                   'Realizations':args.realizations,
                   'Project Life':args.life,
                   'Model Seeds':args.modelseeds,
-                  'Acquisition Seeds':args.acquisitionseeds}
+                  'Acquisition Seeds':args.acquisitionseeds,
+                  'Delay':float(args.delay)}
     if args.hpc is None or args.hpc == 'y':
         opt_params.update({'HPC':True})
     elif args.hpc == 'n':
