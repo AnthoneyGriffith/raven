@@ -147,6 +147,12 @@ class ProbabilityOfImprovement(AcquisitionFunction):
     # Pulling mean and std out of evaluation to operate on array structure
     muVec = modelEvaluation[0]
     r = np.max(muVec) - np.min(muVec)
+    # If r is zero or very small, let's encourage some exploration
+    if r <= 1e-8:
+      r = np.abs(np.max(muVec))
+      # If we are still not exploratory, we will be (mu_max = 0)
+      if r <= 1e-3:
+        r = 1e3
 
     # Retrieve iteration and set epsilon for threshhold
     self._transient(bayesianOptimizer._iteration[0])
