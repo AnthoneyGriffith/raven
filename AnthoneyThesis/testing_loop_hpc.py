@@ -38,6 +38,13 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         outer_slice = heron_input.rfind('\\')
     outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
 
+    # If running through qsub, but don't want parallelization (in case of errors lol)
+    if opt_params['Inner Optimization Cores'] == 1 and opt_params['HPC']:
+        print(f'Removing parallelization from inner.xml...')
+        time.sleep(opt_params['Delay'])
+        inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
+        deparallelizeInner(inner_file)
+
     # Preprocess the outer file
     outer_new = preprocessOuter(outer_base, opt_params)
     
@@ -286,6 +293,18 @@ def preprocessOuter(outer_file, opt_params):
     new_outer = outer_file.replace('.xml', extension)
     parsed.write(new_outer)
     return new_outer
+
+def deparallelizeInner(inner_file):
+    """
+        If no parallelization is desired, then change inner to reflect that
+        @ In, inner_file
+    """
+    # Parse inner
+    parsed = tree.parse(inner_file)
+    info = parsed.find('RunInfo')
+    internal_parallel = info.find('internalParallel')
+    internal_parallel.text = 'False'
+    parsed.write(inner_file)
 
 def updateOuter(outer_file, current_trial):
     """
