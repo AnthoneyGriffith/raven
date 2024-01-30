@@ -13,7 +13,7 @@ def clear_outer_inners(name, location, trials):
     # Iterate through trials
     for trial in range(trials):
         opt_dir = location + 'Opt_info_' + name + '_' + str(trial+1) + '/'
-        for dummy_count in range(1e3):
+        for dummy_count in range(1000):
             out_inner = opt_dir + 'optimize/' + str(dummy_count+1) + '/out~inner'
             try:
                 os.remove(out_inner)
