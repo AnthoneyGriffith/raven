@@ -37,12 +37,14 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     except:
         outer_slice = heron_input.rfind('\\')
     outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
+    inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
 
+    # Don't want excessive printout
+    silenceInner(inner_file)
     # If running through qsub, but don't want parallelization (in case of errors lol)
     if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
         print(f'Removing parallelization from inner.xml...')
         time.sleep(opt_params['Delay'])
-        inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
         deparallelizeInner(inner_file)
 
     # Preprocess the outer file
@@ -77,6 +79,11 @@ def rewriteHeronInput(heron_input, opt_params):
     case = parsed.find('Case')
 
     # Removing verbosity to see if it helps with outer-inner size
+    upper_verb = case.find('verbosity')
+    if upper_verb is None:
+        upper_verb = tree.SubElement(case, 'verbosity')
+    upper_verb.text = 'silent'
+    # Getting both verbosity arguments
     econ = case.find('economics')
     verb = econ.find('verbosity')
     if verb is None:
@@ -315,6 +322,16 @@ def deparallelizeInner(inner_file):
     info = parsed.find('RunInfo')
     internal_parallel = info.find('internalParallel')
     internal_parallel.text = 'False'
+    parsed.write(inner_file)
+
+def silenceInner(inner_file):
+    """
+        Turns verbosity printouts off for inner
+        @ In, inner_file
+    """
+    # Parse inner
+    parsed = tree.parse(inner_file)
+    parsed.attrib['verbosity'] = 'silent'
     parsed.write(inner_file)
 
 def updateOuter(outer_file, current_trial):
