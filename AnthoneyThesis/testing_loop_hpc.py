@@ -81,9 +81,9 @@ def rewriteHeronInput(heron_input, opt_params):
     verb = econ.find('verbosity')
     if verb is None:
         verb = tree.SubElement(econ, 'verbosity')
-        verb.text = 0
+        verb.text = str(0)
     else:
-        verb.text = 0
+        verb.text = str(0)
     
     # Handling parallel node
     parallel = case.find('parallel')
