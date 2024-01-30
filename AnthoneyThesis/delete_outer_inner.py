@@ -27,3 +27,4 @@ if __name__ == '__main__':
     parser.add_argument("-l", "--location", required=True, help='directory of heron files where working directories are')
     parser.add_argument("-t", "--trials", required=True, help='number of trials for which folders are available')
     args = parser.parse_args()
+    clear_outer_inners(args.name, args.location, int(args.trials))
