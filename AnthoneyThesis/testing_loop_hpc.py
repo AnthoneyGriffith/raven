@@ -75,6 +75,17 @@ def rewriteHeronInput(heron_input, opt_params):
     parsed = tree.parse(heron_input)
     # Looking for the case node
     case = parsed.find('Case')
+
+    # Removing verbosity to see if it helps with outer-inner size
+    econ = case.find('economics')
+    verb = econ.find('verbosity')
+    if verb is None:
+        verb = tree.SubElement(econ, 'verbosity')
+        verb.text = 0
+    else:
+        verb.text = 0
+    
+    # Handling parallel node
     parallel = case.find('parallel')
     if opt_params['HPC']:
         if parallel is None:
