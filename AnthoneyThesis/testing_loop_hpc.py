@@ -331,7 +331,8 @@ def silenceInner(inner_file):
     """
     # Parse inner
     parsed = tree.parse(inner_file)
-    parsed.attrib['verbosity'] = 'silent'
+    simulation = parsed.find('Simulation')
+    simulation.attrib['verbosity'] = 'silent'
     parsed.write(inner_file)
 
 def updateOuter(outer_file, current_trial):
