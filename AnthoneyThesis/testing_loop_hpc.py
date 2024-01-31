@@ -40,7 +40,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
 
     # Don't want excessive printout
-    silenceInner(inner_file)
+    # silenceInner(inner_file)
     # If running through qsub, but don't want parallelization (in case of errors lol)
     if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
         print(f'Removing parallelization from inner.xml...')
@@ -79,18 +79,18 @@ def rewriteHeronInput(heron_input, opt_params):
     case = parsed.find('Case')
 
     # Removing verbosity to see if it helps with outer-inner size
-    upper_verb = case.find('verbosity')
-    if upper_verb is None:
-        upper_verb = tree.SubElement(case, 'verbosity')
-    upper_verb.text = 'silent'
-    # Getting both verbosity arguments
-    econ = case.find('economics')
-    verb = econ.find('verbosity')
-    if verb is None:
-        verb = tree.SubElement(econ, 'verbosity')
-        verb.text = str(0)
-    else:
-        verb.text = str(0)
+    # upper_verb = case.find('verbosity')
+    # if upper_verb is None:
+    #     upper_verb = tree.SubElement(case, 'verbosity')
+    # upper_verb.text = 'silent'
+    # # Getting both verbosity arguments
+    # econ = case.find('economics')
+    # verb = econ.find('verbosity')
+    # if verb is None:
+    #     verb = tree.SubElement(econ, 'verbosity')
+    #     verb.text = str(0)
+    # else:
+    #     verb.text = str(0)
     
     # Handling parallel node
     parallel = case.find('parallel')
