@@ -28,8 +28,9 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
 
     # Need make new heron input with correct qsub parameters and arma directories
     new_heron = rewriteHeronInput(heron_input, opt_params)
-    h_command = heron_loc + " " + new_heron
-    os.system(h_command)
+    # h_command = heron_loc + " " + new_heron
+    # os.system(h_command)
+    heron_result = sub.run([heron_loc, new_heron], stdout=sub.PIPE, text=False)
 
     # Gotta find the outer file
     try:
@@ -59,8 +60,9 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         trial_outer = updateOuter(outer_new, samp+1)
 
         # The raven command is then
-        r_command = raven_loc + " " + trial_outer
-        os.system(r_command)
+        # r_command = raven_loc + " " + trial_outer
+        # os.system(r_command)
+        raven_result = sub.run([raven_loc, trial_outer], stdout=sub.PIPE, text=False)
 
         # Might want to wait before submitting next job
         print(f'Waiting {opt_params["Delay"]} seconds before submitting next job... \n')
