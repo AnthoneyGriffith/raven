@@ -219,12 +219,12 @@ def preprocessOuter(outer_file, opt_params):
     workingdir.text = 'Opt_info' + '_' + opt_params['Analysis Name']
 
     # Setting parallel to false
-    parsed.find('RunInfo').find('internalParallel').text = 'False'
+    # parsed.find('RunInfo').find('internalParallel').text = 'False'
 
     # # Removing plot from sequence, steps, outstreams, etc
-    # parsed.find('RunInfo').find('Sequence').text = 'optimize'
-    # parsed.find('Steps').remove(parsed.find('Steps').find('IOStep'))
-    # parsed.find('OutStreams').remove(parsed.find('OutStreams').find('Plot'))
+    parsed.find('RunInfo').find('Sequence').text = 'optimize'
+    parsed.find('Steps').remove(parsed.find('Steps').find('IOStep'))
+    parsed.find('OutStreams').remove(parsed.find('OutStreams').find('Plot'))
 
     # Optimizer objects of BO and GD treated slightly different
     output = parsed.find('DataObjects').findall(".//PointSet/[@name='opt_soln']")[0].find('Output')
