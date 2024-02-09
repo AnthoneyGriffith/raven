@@ -62,7 +62,7 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         # The raven command is then
         # r_command = raven_loc + " " + trial_outer
         # os.system(r_command)
-        raven_result = sub.run([raven_loc, trial_outer], stdout=sub.PIPE, text=False)
+        raven_result = sub.run([raven_loc, trial_outer], stdout=sub.PIPE, text=True)
 
         # Might want to wait before submitting next job
         print(f'Waiting {opt_params["Delay"]} seconds before submitting next job... \n')
