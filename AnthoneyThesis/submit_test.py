@@ -44,7 +44,8 @@ def submit(arg_dict, opt_dict, acqu_dict):
             new_command.append(kern)
             new_command.append('-a')
             new_command.append(acquisition)
-            print(f'Submitting jobs for {name}...')
+            print(f'Submitting jobs for {name}...\n')
+            print(' '.join(new_command))
             time.sleep(5)
             call = sub.run(new_command, stdout=sub.PIPE, text=False)
 
