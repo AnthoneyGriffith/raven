@@ -236,8 +236,10 @@ def rewriteHeronInput(heron_input, opt_params, trial):
         case.find('economics').find('ProjectTime').text = opt_params['Project Life']
 
     # Saving as a new heron input for just this trial
-    input_extension = opt_params['Analysis Name'] + '_' + str(trial) + '/heron_input.xml'
-    new_input = heron_input.replace('heron_input.xml', input_extension)
+    input_extension = opt_params['Analysis Name'] + '_' + str(trial) 
+    new_heron_dir = heron_input.replace('heron_input.xml', input_extension)
+    os.mkdir(new_heron_dir)
+    new_input = new_heron_dir + '/heron_input.xml'
     parsed.write(new_input)
     return new_input
 
