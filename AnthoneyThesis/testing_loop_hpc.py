@@ -8,6 +8,7 @@ import platform as plat
 import subprocess as sub
 import argparse as arg
 import time
+import glob
 
 def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     """
@@ -239,6 +240,9 @@ def rewriteHeronInput(heron_input, opt_params, trial):
     input_extension = opt_params['Analysis Name'] + '_' + str(trial) 
     new_heron_dir = heron_input.replace('heron_input.xml', input_extension)
     os.mkdir(new_heron_dir)
+    pickle = glob.glob('./*.pk')
+    print(pickle)
+    exit()
     new_input = new_heron_dir + '/heron_input.xml'
     parsed.write(new_input)
     return new_input
