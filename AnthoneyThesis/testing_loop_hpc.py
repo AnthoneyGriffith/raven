@@ -240,11 +240,13 @@ def rewriteHeronInput(heron_input, opt_params, trial):
     input_extension = opt_params['Analysis Name'] + '_' + str(trial) 
     new_heron_dir = heron_input.replace('heron_input.xml', input_extension)
     os.mkdir(new_heron_dir)
-    pickle = glob.glob('./*.pk')
-    print(pickle)
-    exit()
     new_input = new_heron_dir + '/heron_input.xml'
     parsed.write(new_input)
+    
+    current_dir = heron_input.replace('heron_input.xml', '')
+    pickle = glob.glob(current_dir+'/*.pk')
+    print(pickle)
+    exit()
     return new_input
 
 def preprocessOuter(outer_file, opt_params):
