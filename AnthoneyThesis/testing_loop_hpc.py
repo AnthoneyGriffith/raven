@@ -26,43 +26,76 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
     heron_loc = heron_loc.replace("~", os_home)
     heron_input = heron_input.replace("~", os_home)
 
-    # Need make new heron input with correct qsub parameters and arma directories
-    new_heron = rewriteHeronInput(heron_input, opt_params)
+    # # Need make new heron input with correct qsub parameters and arma directories
+    # new_heron = rewriteHeronInput(heron_input, opt_params)
     
-    if opt_params['HPC']:
-        heron_result = sub.run([heron_loc, new_heron], stdout=sub.PIPE, text=False)
-    else:
-        h_command = heron_loc + " " + new_heron
-        os.system(h_command)
+    # if opt_params['HPC']:
+    #     heron_result = sub.run([heron_loc, new_heron], stdout=sub.PIPE, text=False)
+    # else:
+    #     h_command = heron_loc + " " + new_heron
+    #     os.system(h_command)
 
-    # Gotta find the outer file
-    try:
-        outer_slice = heron_input.rfind('/')
-    except:
-        outer_slice = heron_input.rfind('\\')
-    outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
-    inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
+    # # Gotta find the outer file
+    # try:
+    #     outer_slice = heron_input.rfind('/')
+    # except:
+    #     outer_slice = heron_input.rfind('\\')
+    # outer_base = heron_input[0:outer_slice+1] + 'outer.xml'
+    # inner_file = heron_input[0:outer_slice+1] + 'inner.xml'
 
-    # Don't want excessive printout
-    # silenceInner(inner_file)
-    # If running through qsub, but don't want parallelization (in case of errors lol)
-    if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
-        print(f'Removing parallelization from inner.xml...')
-        time.sleep(opt_params['Delay'])
-        deparallelizeInner(inner_file)
+    # # Don't want excessive printout
+    # # silenceInner(inner_file)
+    # # If running through qsub, but don't want parallelization (in case of errors lol)
+    # if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
+    #     print(f'Removing parallelization from inner.xml...')
+    #     time.sleep(opt_params['Delay'])
+    #     deparallelizeInner(inner_file)
 
-    # Preprocess the outer file
-    outer_new = preprocessOuter(outer_base, opt_params)
+    # # Preprocess the outer file
+    # outer_new = preprocessOuter(outer_base, opt_params)
     
     # Looping over sample runs
     for samp in range(sample_count):
         # Just to see where we are at...
         print(f'Running trial {samp+1}...')
 
+        # Need make new heron input with correct qsub parameters and arma directories
+        print(f'Updating heron input...')
+        new_heron = rewriteHeronInput(heron_input, opt_params, samp+1)
+        
+        print('Running HERON')
+        if opt_params['HPC']:
+            heron_result = sub.run([heron_loc, new_heron], stdout=sub.PIPE, text=False)
+        else:
+            h_command = heron_loc + " " + new_heron
+            os.system(h_command)
+
+        # Gotta find the outer file
+        try:
+            outer_slice = new_heron.rfind('/')
+        except:
+            outer_slice = new_heron.rfind('\\')
+        outer_base = new_heron[0:outer_slice+1] + 'outer.xml'
+        inner_file = new_heron[0:outer_slice+1] + 'inner.xml'
+
+        # Don't want excessive printout
+        # silenceInner(inner_file)
+        # If running through qsub, but don't want parallelization (in case of errors lol)
+        if opt_params['Inner Optimization Cores'] == str(1) and opt_params['HPC']:
+            print(f'Removing parallelization from inner.xml...')
+            time.sleep(opt_params['Delay'])
+            deparallelizeInner(inner_file)
+
+        # Preprocess the outer file
+        print('Preprocessing outer file...')
+        outer_new = preprocessOuter(outer_base, opt_params)
+        
         # Update outer file for next trial
+        print('Instantiating initial points for outer and finalizing run criteria...')
         trial_outer = updateOuter(outer_new, samp+1)
 
         # The raven command is then dependent on what we are running on
+        print('Running raven for current trial...')
         if opt_params['HPC']:
             raven_result = sub.run([raven_loc, trial_outer], stdout=sub.PIPE, text=False)
         else:
@@ -73,11 +106,12 @@ def ravenLoop(raven_loc, heron_loc, heron_input, sample_count, opt_params):
         print(f'Waiting {opt_params["Delay"]} seconds before submitting next job... \n')
         time.sleep(opt_params['Delay'])
 
-def rewriteHeronInput(heron_input, opt_params):
+def rewriteHeronInput(heron_input, opt_params, trial):
     """
         Updates information on heron input for qsub runs on hpc
         @ In, heron_input, str, directory of base heron_input
         @ In, opt_params, dict, additional information for editing xmls
+        @ In, trial, int, current trial number
         @ Out, new_input, str, location of new heron input
     """
     # Open current heron xml
@@ -202,8 +236,8 @@ def rewriteHeronInput(heron_input, opt_params):
         case.find('economics').find('ProjectTime').text = opt_params['Project Life']
 
     # Saving as a new heron input for just this trial
-    input_extension = '_' + opt_params['Analysis Name'] + '.xml'
-    new_input = heron_input.replace('.xml', input_extension)
+    input_extension = opt_params['Analysis Name'] + '_' + str(trial) + '/heron_input.xml'
+    new_input = heron_input.replace('heron_input.xml', input_extension)
     parsed.write(new_input)
     return new_input
 
