@@ -19,7 +19,7 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
         # Just wanna track which ones I am loading
         print(f'Attempting to load and resave results for trial {samp+1}')
         # Abusing fixed naming structure with test name
-        solution_dir = analysis_dir + "Opt_info_" + test_name + '_' + str(samp+1)
+        solution_dir = analysis_dir + '/' + test_name + '_' + str(samp+1) + "/Opt_info_" + test_name + '_' + str(samp+1)
         # Need to check if this job actually finished
         out_inner = solution_dir + '/optimize/' + max_eval + '/out~inner'
         # Checking if out inner exists for final evaluation
