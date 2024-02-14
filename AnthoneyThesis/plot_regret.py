@@ -3,6 +3,135 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max=True):
+    """
+        Determines the gold value to use for regret calculation based on test results
+        @ In, csv_dir, directory pointing to csvs for given comparison
+        @ In, opt_list, list of upper directories for csvs
+        @ In, sample_count, number of samples for analysis
+        @ In, eval_count, number of evaluations for each optimization (same for all csvs please)
+        @ In, objective, name of objective of optimization
+        @ In, decision_vars, names of decision variables for optimization
+        @ In, best_count, number of samples to store and calculate gold value variance with
+        @ In, max, bool that says whether it was a minimization or maximization problem
+        @ Out, gold_value, recommended gold value
+    """
+    # Initialize gold data dictionary used for comparison
+    gold_dict = {}
+    for method in opt_list:
+        gold_dict.update({method:{}})
+
+    # Initialize gold value
+    if max:
+        gold_value = -1e99
+    else:
+        gold_value = 1e99
+    gold_method = None
+    gold_decision = None
+    
+    # Iterating through each method and pulling the top best_count solutions ordering them accordingly
+    for method in opt_list:
+        # Initialize arrays for objectives and decisions
+        if max:
+            obj_array = -1e99*np.ones(best_count)
+            obj_val = -1e99
+        else:
+            obj_array = 1e99*np.ones(best_count)
+            obj_val = -1e99
+        
+        # Setting an array for each decision variable
+        var_dict = {}
+        for var in decision_vars:
+            var_dict[var] = np.empty(best_count)
+            var_dict[var+'_best'] = None
+        
+        # Tracking which sample had the best solution
+        best_sample = 0
+        
+        # Iterating through samples for this method
+        for samp in range(sample_count):
+            # Load data
+            csv = csv_dir + '/' + method + '/' + f'Opt_{samp+1}.csv'
+            loaded_csv = pd.read_csv(csv)
+
+            # Check csv
+            finalized = np.asarray(loaded_csv['accepted'])[-1]
+            if finalized != 'final':
+                print('CSV is not complete')
+                exit()
+
+            # Retrieve final values
+            sol_obj = np.asarray(loaded_csv[objective])[-1]
+            temp_var_dict = {}
+            for var in decision_vars:
+                value = np.asarray(loaded_csv[var])[-1]
+                temp_var_dict[var] = value
+            
+            # Compare against current list of solutions
+            if max:
+                worst_max = np.min(obj_array)
+                worst_index = np.argmin(obj_array)
+                if sol_obj > obj_val:
+                    best_sample = samp+1
+                    obj_val = sol_obj
+                    obj_array[worst_index] = sol_obj
+                    for var in decision_vars:
+                        var_dict[var+'_best'] = temp_var_dict[var]
+                        var_dict[var][worst_index] = temp_var_dict[var]
+                elif sol_obj > worst_max:
+                    obj_array[worst_index] = sol_obj
+                    for var in decision_vars:
+                        var_dict[var][worst_index] = temp_var_dict[var]
+            else:
+                worst_min = np.max(obj_array)
+                worst_index = np.argmax(obj_array)
+                if sol_obj < obj_val:
+                    best_sample = samp+1
+                    obj_val = sol_obj
+                    obj_array[worst_index] = sol_obj
+                    for var in decision_vars:
+                        var_dict[var+'_best'] = temp_var_dict[var]
+                        var_dict[var][worst_index] = temp_var_dict[var]
+                elif sol_obj < worst_min:
+                    obj_array[worst_index] = sol_obj
+                    for var in decision_vars:
+                        var_dict[var][worst_index] = temp_var_dict[var]
+        # Print out some statistics from gold value determination for this method
+        print(f'Displaying results for the optimization method {method}...\n')
+        print(f'The estimated solution value is {obj_val}\n'
+              f'The top {best_count} solution values are...\n {obj_array}\n'
+              f'The variance of these is {np.var(obj_array)}\n')
+
+        for var in decision_vars:
+            print(f'The value of {var} at the best solution is {var_dict[var+"_best"]}\n'
+                  f'The values of {var} at the top {best_count} solutions are...\n {var_dict[var]}\n'
+                  f'The variance of these are {np.var(var_dict[var])}\n')
+        # Storing total dictionary of information over all optimizers
+        gold_dict[method].update(var_dict)
+        gold_dict[method].update({'Objective Array':obj_array})
+        gold_dict[method].update({'Objective Best':obj_val})
+        gold_dict[method].update({'Best Sample':best_sample})
+
+        if max:
+            if obj_val > gold_value or gold_value is None:
+                gold_value = obj_val
+                gold_method = method
+                gold_decision = {}
+                for var in decision_vars:
+                    gold_decision[var] = var_dict[var+'_best']
+        else:
+            if obj_val < gold_value or gold_value is None:
+                gold_value = obj_val
+                gold_method = method
+                gold_decision = {}
+                for var in decision_vars:
+                    gold_decision[var] = var_dict[var+'_best']
+    print(f'Finished skimming the results for a gold value...\n'
+          f'The gold value is {gold_value}\n'
+          f'The method that found this value is {gold_method}\n'
+          f'The decision variables are...\n{gold_decision}\n')
+    return gold_value
+
 def generate_regret(csv_dir, opt_list, sample_count, eval_count, objective, gold_value):
     """
         Plot the regret for the results for a given TEA comparison
@@ -454,6 +583,10 @@ if __name__ == '__main__':
     sample_count = 50
     eval_count = 50
     objective = 'mean_NPV'
+    decision_vars = ['H2_storage_capacity', 'HTSE_capacity', 'wind_capacity', 'npp_capacity']
+    best_count = 10
+    max = True
+    determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max)
     gold_value = -2.32e8
     # gold_value = 80.22
     plotting_info = {'map':{'GD':'Grdient Descent','BO':'Bayesian Optimization'},
