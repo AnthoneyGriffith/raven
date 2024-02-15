@@ -22,12 +22,9 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
         solution_dir = analysis_dir + '/' + test_name + '_' + str(samp+1) + "/Opt_info_" + test_name + '_' + str(samp+1)
         # Need to check if this job actually finished
         out_inner = solution_dir + '/optimize/' + max_eval + '/out~inner'
-        print(out_inner)
 
         # Checking if out inner exists for final evaluation
         finished = os.path.exists(out_inner)
-        print(finished)
-        exit()
         if finished:
             # Notify user
             print(f'Trial {samp+1} for test {test_name} appears to have finished...')
@@ -40,6 +37,8 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
             loaded = pd.read_csv(solution_csv)
             loaded.to_csv(to_save)
             true_count += 1
+            print('Its working??')
+            exit()
         else:
             print(f'Could not find out~inner for trial {samp+1}, assume it has failed.\n')
     print(f'All finished!\n'
