@@ -575,7 +575,6 @@ def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50
     plt.ylim(bottom=0)
     plt.show()
     
-
 if __name__ == '__main__':
     csv_dir = 'ies_csv'
     # csv_dir = 'optimization_settings_csv2'

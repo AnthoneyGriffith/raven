@@ -22,6 +22,8 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
         solution_dir = analysis_dir + '/' + test_name + '_' + str(samp+1) + "/Opt_info_" + test_name + '_' + str(samp+1)
         # Need to check if this job actually finished
         out_inner = solution_dir + '/optimize/' + max_eval + '/out~inner'
+        print(out_inner)
+        exit()
         # Checking if out inner exists for final evaluation
         finished = os.path.exists(out_inner)
         if finished:
