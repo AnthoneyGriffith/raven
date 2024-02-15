@@ -37,8 +37,6 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
             loaded = pd.read_csv(solution_csv)
             loaded.to_csv(to_save)
             true_count += 1
-            print('Its working??')
-            exit()
         else:
             print(f'Could not find out~inner for trial {samp+1}, assume it has failed.\n')
     print(f'All finished!\n'
