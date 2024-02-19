@@ -325,7 +325,9 @@ class BayesianOptimizer(RavenSampled):
       self._resolveNewOptPoint(traj, rlz, optVal, info)
 
     # Use acquisition to select next point
+    self.raiseAMessage('Optimizing acquisition function...')
     newPoint = self._acquFunction.conductAcquisition(self)
+    self.raiseAMessage('Acquisition is complete...')
     self._submitRun(newPoint, traj, step)
     self.incrementIteration(traj)
 
@@ -517,6 +519,7 @@ class BayesianOptimizer(RavenSampled):
     newTheta = res.x
     newKernel = self._model.supervisedContainer[0].model.kernel_.clone_with_theta(newTheta)
     self._model.supervisedContainer[0].model.kernel = newKernel
+    self.raiseAMessage('Retraining GPR model for hyperparameter selection...')
     self._trainRegressionModel(0)
 
   def _trainRegressionModel(self, traj):
@@ -551,15 +554,21 @@ class BayesianOptimizer(RavenSampled):
         self._trainRegressionModel(traj)
         self._model.supervisedContainer[0].model.set_params(optimizer=None)
       elif self._modelSelection == 'Internal':
+        self.raiseAMessage('Training GPR model on evaluation data...')
         self._trainRegressionModel(traj)
+        self.raiseAMessage('Finished training GPR model...')
         restartCount = self._model.supervisedContainer[0].model.get_params()['n_restarts_optimizer']
+        self.raiseAMessage('Selecting hyperparameters for GPR model...')
         self._selectHyperparameters(restartCount=restartCount)
+        self.raiseAMessage('Optimized hyperparameters successfully (I think)...')
       elif self._modelSelection == 'Average':
         self.raiseAnError(RuntimeError, 'Model averaging is not yet available')
       else:
         self._trainRegressionModel(traj)
     else:
+      self.raiseAMessage('Training GPR model on evaluation data...')
       self._trainRegressionModel(traj)
+      self.raiseAMessage('Finished training GPR model...')
 
   def _evaluateRegressionModel(self, featurePoint):
     """

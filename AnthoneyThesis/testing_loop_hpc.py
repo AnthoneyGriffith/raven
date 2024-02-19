@@ -122,18 +122,18 @@ def rewriteHeronInput(heron_input, opt_params, trial):
     case = parsed.find('Case')
 
     # Removing verbosity to see if it helps with outer-inner size
-    # upper_verb = case.find('verbosity')
-    # if upper_verb is None:
-    #     upper_verb = tree.SubElement(case, 'verbosity')
-    # upper_verb.text = 'silent'
-    # # Getting both verbosity arguments
-    # econ = case.find('economics')
-    # verb = econ.find('verbosity')
-    # if verb is None:
-    #     verb = tree.SubElement(econ, 'verbosity')
-    #     verb.text = str(0)
-    # else:
-    #     verb.text = str(0)
+    upper_verb = case.find('verbosity')
+    if upper_verb is None:
+        upper_verb = tree.SubElement(case, 'verbosity')
+    upper_verb.text = 'debug'
+    # Getting both verbosity arguments
+    econ = case.find('economics')
+    verb = econ.find('verbosity')
+    if verb is None:
+        verb = tree.SubElement(econ, 'verbosity')
+        verb.text = str(0)
+    else:
+        verb.text = str(0)
     
     # Handling parallel node
     parallel = case.find('parallel')
