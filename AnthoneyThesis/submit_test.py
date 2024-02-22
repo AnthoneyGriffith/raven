@@ -22,7 +22,7 @@ def submit(arg_dict, opt_dict, acqu_dict):
                     '-pl', arg_dict['Project Life'],
                     '-re', arg_dict['Realizations'],
                     '-o', 'BayesianOptimizer',
-                    '-m', '6g',
+                    '-m', '8g',
                     '-rt', '120:00:00',
                     '-as', str(int(25*float(arg_dict['Dimension']))),
                     '-ip', str(1),
