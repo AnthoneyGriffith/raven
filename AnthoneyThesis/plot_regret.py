@@ -565,13 +565,13 @@ def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50
                 'Average Regret':ave_array}
     df = pd.DataFrame(df_dict)
     sns.catplot(data=df, x='Evaluations', y='Simple Regret', hue='Name',
-                kind="violin", inner='stick', split=False, palette="pastel", density_norm='count')
+                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
     sns.catplot(data=df, x='Evaluations', y='Cumulative Regret', hue='Name',
-                kind="violin", inner='stick', split=False, palette="pastel", density_norm='count')
+                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
     sns.catplot(data=df, x='Evaluations', y='Average Regret', hue='Name',
-                kind="violin", inner='stick', split=False, palette="pastel", density_norm='count')
+                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
     plt.show()
     
@@ -586,9 +586,9 @@ if __name__ == '__main__':
     best_count = 10
     max = True
     determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max)
-    gold_value = -2.32e8
+    gold_value = -2.31252655e8
     # gold_value = 80.22
-    plotting_info = {'map':{'GD':'Grdient Descent','BO':'Bayesian Optimization'},
+    plotting_info = {'map':{'GD':'Gradient Descent','BO':'Bayesian Optimization'},
                      'color_bank':['blue', 'red', 'green', 'black', 'maroon', 'orange'],
                      'axis_font':16,
                      'title_font':18,
@@ -620,5 +620,5 @@ if __name__ == '__main__':
     #              'sample_points':np.linspace(0, 1.2*np.max(hist_data_simple),100),
     #              }
     # regret_histogram(hist_data_simple, hist_info)
-    plot_trajectories(plot_data, plotting_info)
+    # plot_trajectories(plot_data, plotting_info)
     plot_violins(plot_data, plotting_info)

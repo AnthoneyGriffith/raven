@@ -272,10 +272,11 @@ def preprocessOuter(outer_file, opt_params):
     # Setting parallel to false
     # parsed.find('RunInfo').find('internalParallel').text = 'False'
 
-    # # Removing plot from sequence, steps, outstreams, etc
-    # parsed.find('RunInfo').find('Sequence').text = 'optimize'
-    # parsed.find('Steps').remove(parsed.find('Steps').find('IOStep'))
-    # parsed.find('OutStreams').remove(parsed.find('OutStreams').find('Plot'))
+    # Removing just plot pieces, but nothing else. Please let this work
+    steps = parsed.find('Steps')
+    IO = steps.find('IOStep')
+    IO.remove(IO.findall(".//Output/[@type='Plot']")[0])
+    parsed.find('OutStreams').remove(parsed.find('OutStreams').find('Plot'))
 
     # Optimizer objects of BO and GD treated slightly different
     output = parsed.find('DataObjects').findall(".//PointSet/[@name='opt_soln']")[0].find('Output')
@@ -410,12 +411,6 @@ def updateOuter(outer_file, current_trial):
     # Distributions for variables
     dists = parsed.find("Distributions")
     var_dict = {}
-
-    # # Updating solution export name in outstreams and steps
-    # opt_out = parsed.find('OutStreams').findall(".//Print/[@name='opt_soln']")[0]
-    # opt_out.attrib['name'] = opt_out.attrib['name'] + '_' + str(current_trial)
-    # output_step = parsed.find('Steps').find('MultiRun').findall(".//Output/[@class='OutStreams']")[0]
-    # output_step.text = opt_out.attrib['name']
 
     # Retrieving variable information
     for dist in dists:
