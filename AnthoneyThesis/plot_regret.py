@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.collections
 import seaborn as sns
 
 def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max=True):
@@ -564,17 +565,110 @@ def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50
                 'Cumulative Regret':cum_array,
                 'Average Regret':ave_array}
     df = pd.DataFrame(df_dict)
-    sns.catplot(data=df, x='Evaluations', y='Simple Regret', hue='Name',
+    simp_ax = sns.catplot(data=df, x='Evaluations', y='Simple Regret', hue='Name',
                 kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
-    sns.catplot(data=df, x='Evaluations', y='Cumulative Regret', hue='Name',
+    cum_ax = sns.catplot(data=df, x='Evaluations', y='Cumulative Regret', hue='Name',
                 kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
-    sns.catplot(data=df, x='Evaluations', y='Average Regret', hue='Name',
+    ave_ax = sns.catplot(data=df, x='Evaluations', y='Average Regret', hue='Name',
                 kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
     plt.ylim(bottom=0)
+    width = 0.75
+    delta = 0.025
+    final_width = width - delta
+    inner = 'sticks'
+    offset_violinplot_halves(simp_ax, delta, final_width, inner, 'vertical')
+    offset_violinplot_halves(cum_ax, delta, final_width, inner, 'vertical')
+    offset_violinplot_halves(ave_ax, delta, final_width, inner, 'vertical')
     plt.show()
-    
+
+def offset_violinplot_halves(ax, delta, width, inner, direction):
+    """
+    This function offsets the halves of a violinplot to compare tails
+    or to plot something else in between them. This is specifically designed
+    for violinplots by Seaborn that use the option `split=True`.
+
+    For lines, this works on the assumption that Seaborn plots everything with
+     integers as the center.
+
+    Args:
+     <ax>    The axis that contains the violinplots.
+     <delta> The amount of space to put between the two halves of the violinplot
+     <width> The total width of the violinplot, as passed to sns.violinplot()
+     <inner> The type of inner in the seaborn
+     <direction> Orientation of violinplot. 'hotizontal' or 'vertical'.
+
+    Returns:
+     - NA, modifies the <ax> directly
+    """
+    # offset stuff
+    if inner == 'sticks':
+        lines = ax.figure.get_axes()[0].get_lines()
+        for line in lines:
+            if direction == 'horizontal':
+                data = line.get_ydata()
+                if int(data[0] + 1)/int(data[1] + 1) < 1:
+                    # type is top, move neg, direction backwards for horizontal
+                    data -= delta
+                else:
+                    # type is bottom, move pos, direction backward for hori
+                    data += delta
+                line.set_ydata(data)
+            elif direction == 'vertical':
+                data = line.get_xdata()
+                if int(data[0] + 1)/int(data[1] + 1) < 1:
+                    # type is left, move neg
+                    data -= delta
+                else:
+                    # type is left, move pos
+                    data += delta
+                line.set_xdata(data)
+
+
+    for ii, item in enumerate(ax.figure.get_axes()[0].collections):
+        # axis contains PolyCollections and PathCollections
+        if isinstance(item, matplotlib.collections.PolyCollection):
+            # get path
+            path, = item.get_paths()
+            vertices = path.vertices
+            half_type = _wedge_dir(vertices, direction)
+            # shift x-coordinates of path
+            if half_type in ['top','bottom']:
+               if inner in ["sticks", None]:
+                    if half_type == 'top': # -> up
+                        vertices[:,1] -= delta
+                    elif half_type == 'bottom': # -> down
+                        vertices[:,1] += delta
+            elif half_type in ['left', 'right']:
+                if inner in ["sticks", None]:
+                    if half_type == 'left': # -> left
+                        vertices[:,0] -= delta
+                    elif half_type == 'right': # -> down
+                        vertices[:,0] += delta
+
+def _wedge_dir(vertices, direction):
+    """
+    Args:
+      <vertices>  The vertices from matplotlib.collections.PolyCollection
+      <direction> Direction must be 'horizontal' or 'vertical' according to how
+                   your plot is laid out.
+    Returns:
+      - a string in ['top', 'bottom', 'left', 'right'] that determines where the
+         half of the violinplot is relative to the center.
+    """
+    if direction == 'horizontal':
+        result = (direction, len(set(vertices[1:5,1])) == 1)
+    elif direction == 'vertical':
+        result = (direction, len(set(vertices[-3:-1,0])) == 1)
+    outcome_key = {('horizontal', True): 'bottom',
+                   ('horizontal', False): 'top',
+                   ('vertical', True): 'left',
+                   ('vertical', False): 'right'}
+    # if the first couple x/y values after the start are the same, it
+    #  is the input direction. If not, it is the opposite
+    return outcome_key[result]
+
 if __name__ == '__main__':
     csv_dir = 'ies_csv'
     # csv_dir = 'optimization_settings_csv2'
@@ -585,7 +679,7 @@ if __name__ == '__main__':
     decision_vars = ['H2_storage_capacity', 'HTSE_capacity', 'wind_capacity', 'npp_capacity']
     best_count = 10
     max = True
-    determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max)
+    # determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective, decision_vars, best_count, max)
     gold_value = -2.31252655e8
     # gold_value = 80.22
     plotting_info = {'map':{'GD':'Gradient Descent','BO':'Bayesian Optimization'},

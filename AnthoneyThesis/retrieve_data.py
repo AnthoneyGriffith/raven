@@ -39,7 +39,7 @@ def retrieveDataCSVs(test_name, analysis_dir, goal_dir, trial_count, max_eval):
             true_count += 1
         else:
             print(f'Could not find out~inner for trial {samp+1}, assume it has failed.\n')
-    print(f'All finished!\n'
+    print(f'Finished collecting for test group {test_name}!\n'
           f'Out of a possible {trial_count} jobs,\n'
           f'{true_count} have finished and had their results retrieved')
 
