@@ -220,13 +220,52 @@ def calculate_average(cumulative_regret):
         average_regret[index] = cum/(index+1)
     return average_regret
 
-def plot_simple(plotting_data, plotting_info, eval_count, data_marking={}):
+def determine_confidence(data, ratio):
+    """
+        Provides arrays for the correct ratio on upper and lower values of the data at each evaluation
+        @ In, data, 2d array, regret for each trial at each evaluation
+        @ In, ratio, float, percentage of trials to include within envelope
+        @ Out, lower, array, array of lower bound values
+        @ Out, upper, array, array of upper bound values
+    """
+    # Initialize upper and lower
+    lower = np.empty(len(data[0,:]))
+    upper = np.empty(len(data[0,:]))
+
+    # Can't do exact ratios if trial count does not allow, so round up to include more data than less
+    separation_count = np.rint(ratio*len(data[:,0]))
+    true_ratio = separation_count/len(data[:,0])
+    print(f'The desired ratio was {ratio}; however, the data allows for a true ratio of {true_ratio}')
+    remove_count = len(data[:,0]) - separation_count
+
+    # Checking if there is an even number of points to remove
+    if remove_count % 2 == 0:
+        upper_snip = int(remove_count/2)
+        lower_snip = int(remove_count/2)
+    # If odd, remove one more from the upper piece, since these are more likely to be outliers
+    else:
+        upper_snip = int(np.rint((remove_count/2)+0.1))
+        lower_snip = int(upper_snip - 1)
+
+    # Looping over each evaluation
+    for eval in range(len(data[0,:])):
+        # Let's look at all data for this evaluation (all trials)
+        trial_data = data[:,eval]
+        # Sort in ascending order
+        sorted = np.sort(trial_data)
+        upper[eval] = sorted[len(data[:,0])-1-upper_snip]
+        lower[eval] = sorted[-1*(len(data[:,0])-lower_snip)]
+    
+    return lower, upper
+
+def plot_simple(plotting_data, plotting_info, eval_count, data_marking={}, confidence='ratio'):
     """
         Uses stacked simple regret to plot mean and confidence intervals
         @ In, plotting_data, data to plot for simple regret
         @ In, plotting_info, dictionary of values for plotting
         @ In, eval_count, number of evaluations
         @ In, data_marking, dict, evaluation counts to plot actual data points on
+        @ In, confidence, str, 'ratio' or 'std' to determine how to draw confidence bounds
     """
     plt.rcParams['text.usetex'] = True
     # Iteration vector
@@ -249,19 +288,33 @@ def plot_simple(plotting_data, plotting_info, eval_count, data_marking={}):
                  linewidth=1.5,
                  color=plotting_info['color_bank'][method_count]
                  )
-        plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         color=plotting_info['color_bank'][method_count],
-                         alpha=0.1
-                         )
-        plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
-        plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
+        if confidence == 'ratio':
+            lower_bound, upper_bound = determine_confidence(data, plotting_info['ratio'])
+            plt.fill_between(iter_vec, lower_bound, upper_bound,
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, lower_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, upper_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(upper_bound)
+        else:
+            plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         method_count += 1
-        ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         if ylim_new > ylim:
             ylim = ylim_new
     plt.legend(fontsize=plotting_info['legend_font'], loc='upper right')
@@ -272,12 +325,14 @@ def plot_simple(plotting_data, plotting_info, eval_count, data_marking={}):
     plt.title(plotting_info['title'], fontsize=plotting_info['title_font'])
     plt.show()
     
-def plot_cum(plotting_data, plotting_info, eval_count, data_marking={}):
+def plot_cum(plotting_data, plotting_info, eval_count, data_marking={}, confidence='ratio'):
     """
         Uses stacked simple regret to plot mean and confidence intervals
         @ In, plotting_data, data to plot for cumulative regret
         @ In, plotting_info, dictionary of values for plotting
         @ In, eval_count, number of evaluations
+        @ In, data_marking, dict, for each method what points to include as manually plotted
+        @ In, confidence, str, what style of confidence bound to use
     """
     plt.rcParams['text.usetex'] = True
     # Iteration vector
@@ -300,19 +355,33 @@ def plot_cum(plotting_data, plotting_info, eval_count, data_marking={}):
                  linewidth=1.5,
                  color=plotting_info['color_bank'][method_count]
                  )
-        plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         color=plotting_info['color_bank'][method_count],
-                         alpha=0.1
-                         )
-        plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
-        plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
+        if confidence == 'ratio':
+            lower_bound, upper_bound = determine_confidence(data, plotting_info['ratio'])
+            plt.fill_between(iter_vec, lower_bound, upper_bound,
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, lower_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, upper_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(upper_bound)
+        else:
+            plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         method_count += 1
-        ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         if ylim_new > ylim:
             ylim = ylim_new
     plt.legend(fontsize=plotting_info['legend_font'], loc='upper right')
@@ -323,12 +392,14 @@ def plot_cum(plotting_data, plotting_info, eval_count, data_marking={}):
     plt.title(plotting_info['title'], fontsize=plotting_info['title_font'])
     plt.show()
     
-def plot_ave(plotting_data, plotting_info, eval_count, data_marking={}):
+def plot_ave(plotting_data, plotting_info, eval_count, data_marking={}, confidence='ratio'):
     """
         Uses stacked simple regret to plot mean and confidence intervals
         @ In, plotting_data, data to plot for average regret
         @ In, plotting_info, dictionary of values for plotting
         @ In, eval_count, number of evaluations
+        @ In, data_marking, dict, for each method what evals to plot trial data for
+        @ In, confidence, str, ratio or std for confidence bounds
     """
     plt.rcParams['text.usetex'] = True
     # Iteration vector
@@ -351,19 +422,33 @@ def plot_ave(plotting_data, plotting_info, eval_count, data_marking={}):
                  linewidth=1.5,
                  color=plotting_info['color_bank'][method_count]
                  )
-        plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                         color=plotting_info['color_bank'][method_count],
-                         alpha=0.1
-                         )
-        plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
-        plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
-                 color=plotting_info['color_bank'][method_count],
-                 linestyle='--', linewidth=1)
+        if confidence == 'ratio':
+            lower_bound, upper_bound = determine_confidence(data, plotting_info['ratio'])
+            plt.fill_between(iter_vec, lower_bound, upper_bound,
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, lower_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, upper_bound,
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(upper_bound)
+        else:
+            plt.fill_between(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                            color=plotting_info['color_bank'][method_count],
+                            alpha=0.1
+                            )
+            plt.plot(iter_vec, np.subtract(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            plt.plot(iter_vec, np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)),
+                    color=plotting_info['color_bank'][method_count],
+                    linestyle='--', linewidth=1)
+            ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         method_count += 1
-        ylim_new = np.max(np.add(np.mean(data, axis=0), plotting_info['std']*np.std(data, axis=0)))
         if ylim_new > ylim:
             ylim = ylim_new
     plt.legend(fontsize=plotting_info['legend_font'], loc='upper right')
@@ -448,7 +533,7 @@ def plot_trajectories(plotting_data, plotting_info):
     plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
     plt.ylabel('$R_s(\\tau)$', fontsize=plotting_info['axis_font'])
     plt.title(plotting_info['title'], fontsize=plotting_info['title_font'])
-    plt.xlim([1,len(simple_data[first_method][:,0])])
+    plt.xlim([1,len(simple_data[first_method][0,:])])
     plt.ylim([0,ylim])
     plt.legend(fontsize=plotting_info['legend_font'])
     plt.show()
@@ -464,7 +549,7 @@ def plot_trajectories(plotting_data, plotting_info):
                  marker='.', markersize=9,
                  label=plotting_info['map'][method])
         # Assumes that there is at least one trial
-        for trial in range(len(data[0,:])):
+        for trial in range(len(data[:,0])):
             trajectory = data[trial,:]
             plt.plot(eval_vec, trajectory,
                      color=plotting_info['color_bank'][color_index],
@@ -476,7 +561,7 @@ def plot_trajectories(plotting_data, plotting_info):
     plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
     plt.ylabel('$R_c(\\tau)$', fontsize=plotting_info['axis_font'])
     plt.title(plotting_info['title'], fontsize=plotting_info['title_font'])
-    plt.xlim([1,len(simple_data[first_method][:,0])])
+    plt.xlim([1,len(simple_data[first_method][0,:])])
     plt.ylim([0,ylim])
     plt.legend(fontsize=plotting_info['legend_font'])
     plt.show()
@@ -492,7 +577,7 @@ def plot_trajectories(plotting_data, plotting_info):
                  marker='.', markersize=9,
                  label=plotting_info['map'][method])
         # Assumes that there is at least one trial
-        for trial in range(len(data[0,:])):
+        for trial in range(len(data[:,0])):
             trajectory = data[trial,:]
             plt.plot(eval_vec, trajectory,
                      color=plotting_info['color_bank'][color_index],
@@ -504,17 +589,23 @@ def plot_trajectories(plotting_data, plotting_info):
     plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
     plt.ylabel('$R_a(\\tau)$', fontsize=plotting_info['axis_font'])
     plt.title(plotting_info['title'], fontsize=plotting_info['title_font'])
-    plt.xlim([1,len(simple_data[first_method][:,0])])
+    plt.xlim([1,len(simple_data[first_method][0,:])])
     plt.ylim([0,ylim])
     plt.legend(fontsize=plotting_info['legend_font'])
     plt.show()
 
-def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50])):
+def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50]), inner='stick', width=0.75, delta=0.03, split=True, save_loc=None, palette=None):
     """
         Uses regret data to plot violins of computer experiments
         @ In, plotting_data, data to plot for all regrets
         @ In, plotting_info, dictionary of values for plotting  
         @ In, eval_indices, np.array, tells what evals to make violins for
+        @ In, inner, str, 'stick' or None
+        @ In, width, float, width of plot
+        @ In, delta, float, width of gap between split
+        @ In, split, bool, whether to split violins or not
+        @ In, save_loc, str, directory to save pngs
+        @ In, palette, str, name of color palette to use
     """
     # Plotting violins with swarms to represent distributed data
     plot_data_simple = plotting_data['Simple']
@@ -537,7 +628,7 @@ def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50
     # Making dict for data frame for violin plots
     for method in list(plot_data_simple):
         # Extending name directory
-        name_list.extend([method]*(trial_count*len(eval_columns)))
+        name_list.extend([plotting_info['map'][method]]*(trial_count*len(eval_columns)))
         # Looping over evaluation counts to plot data for
         for eval_amt in eval_columns:
             # Time extend eval list
@@ -565,23 +656,49 @@ def plot_violins(plotting_data, plotting_info, eval_indices=np.array([1,10,30,50
                 'Cumulative Regret':cum_array,
                 'Average Regret':ave_array}
     df = pd.DataFrame(df_dict)
-    simp_ax = sns.catplot(data=df, x='Evaluations', y='Simple Regret', hue='Name',
-                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
+    if palette is None:
+        color_block = plotting_info['color_bank'][0:len(list(plotting_data))-1]
+    else:
+        color_block = palette
+
+    simp_ax = sns.catplot(data=df, x='Evaluations', y='Simple Regret', hue='Name', legend=False, linecolor='black', saturation=1, height=8.27, aspect=11.7/8.27,
+                kind="violin", inner=inner, split=split, palette=color_block, density_norm='area', inner_kws=dict(color='black'))
+    plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
+    plt.ylabel('$R_s(\\tau)$', fontsize=plotting_info['axis_font'])
+    simp_ax.figure.get_axes()[0].legend(loc='best', title=None, fontsize=plotting_info['legend_font'])
+    simp_ax.figure.get_axes()[0].set_title(plotting_info['title'], fontsize=plotting_info['title_font'])
     plt.ylim(bottom=0)
-    cum_ax = sns.catplot(data=df, x='Evaluations', y='Cumulative Regret', hue='Name',
-                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
+    if split:
+        final_width = width - delta
+        offset_violinplot_halves(simp_ax, delta, final_width, inner, 'vertical')
+    if save_loc is not None:
+        plt.savefig(save_loc+'/'+plotting_info['name']+'_simple_violin.png', bbox_inches="tight")
+
+    cum_ax = sns.catplot(data=df, x='Evaluations', y='Cumulative Regret', hue='Name', legend=False, linecolor='black', saturation=1, height=8.27, aspect=11.7/8.27,
+                kind="violin", inner=inner, split=split, palette=color_block, density_norm='area', inner_kws=dict(color='black'))
+    plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
+    plt.ylabel('$R_c(\\tau)$', fontsize=plotting_info['axis_font'])
+    cum_ax.figure.get_axes()[0].legend(loc='best', title=None, fontsize=plotting_info['legend_font'])
+    cum_ax.figure.get_axes()[0].set_title(plotting_info['title'], fontsize=plotting_info['title_font'])
     plt.ylim(bottom=0)
-    ave_ax = sns.catplot(data=df, x='Evaluations', y='Average Regret', hue='Name',
-                kind="violin", inner='stick', split=True, palette="pastel", density_norm='area')
+    if split:
+        final_width = width - delta
+        offset_violinplot_halves(cum_ax, delta, final_width, inner, 'vertical')
+    if save_loc is not None:
+        plt.savefig(save_loc+'/'+plotting_info['name']+'_cumu_violin.png', bbox_inches="tight")
+
+    ave_ax = sns.catplot(data=df, x='Evaluations', y='Average Regret', hue='Name', legend=False, linecolor='black', saturation=1, height=8.27, aspect=11.7/8.27,
+                kind="violin", inner=inner, split=split, palette=color_block, density_norm='area', inner_kws=dict(color='black'))
+    plt.xlabel('$\\tau$', fontsize=plotting_info['axis_font'])
+    plt.ylabel('$R_a(\\tau)$', fontsize=plotting_info['axis_font'])
+    ave_ax.figure.get_axes()[0].legend(loc='best', title=None, fontsize=plotting_info['legend_font'])
+    ave_ax.figure.get_axes()[0].set_title(plotting_info['title'], fontsize=plotting_info['title_font'])
     plt.ylim(bottom=0)
-    width = 0.75
-    delta = 0.025
-    final_width = width - delta
-    inner = 'sticks'
-    offset_violinplot_halves(simp_ax, delta, final_width, inner, 'vertical')
-    offset_violinplot_halves(cum_ax, delta, final_width, inner, 'vertical')
-    offset_violinplot_halves(ave_ax, delta, final_width, inner, 'vertical')
-    plt.show()
+    if split:
+        final_width = width - delta
+        offset_violinplot_halves(ave_ax, delta, final_width, inner, 'vertical')
+    if save_loc is not None:
+        plt.savefig(save_loc+'/'+plotting_info['name']+'_ave_violin.png', bbox_inches="tight")
 
 def offset_violinplot_halves(ax, delta, width, inner, direction):
     """
@@ -603,7 +720,7 @@ def offset_violinplot_halves(ax, delta, width, inner, direction):
      - NA, modifies the <ax> directly
     """
     # offset stuff
-    if inner == 'sticks':
+    if inner == 'stick':
         lines = ax.figure.get_axes()[0].get_lines()
         for line in lines:
             if direction == 'horizontal':
@@ -635,13 +752,13 @@ def offset_violinplot_halves(ax, delta, width, inner, direction):
             half_type = _wedge_dir(vertices, direction)
             # shift x-coordinates of path
             if half_type in ['top','bottom']:
-               if inner in ["sticks", None]:
+               if inner in ["stick", None]:
                     if half_type == 'top': # -> up
                         vertices[:,1] -= delta
                     elif half_type == 'bottom': # -> down
                         vertices[:,1] += delta
             elif half_type in ['left', 'right']:
-                if inner in ["sticks", None]:
+                if inner in ["stick", None]:
                     if half_type == 'left': # -> left
                         vertices[:,0] -= delta
                     elif half_type == 'right': # -> down
@@ -675,6 +792,8 @@ if __name__ == '__main__':
     opt_list = ['GD','BO']
     sample_count = 50
     eval_count = 50
+    # sample_count = 100
+    # eval_count = 15
     objective = 'mean_NPV'
     decision_vars = ['H2_storage_capacity', 'HTSE_capacity', 'wind_capacity', 'npp_capacity']
     best_count = 10
@@ -688,16 +807,21 @@ if __name__ == '__main__':
                      'title_font':18,
                      'legend_font':14,
                      'title':'IES Workshop Test',
+                     'name':'IES',
                      'alpha':0.3,
-                     'std':3}
+                     'std':3,
+                     'ratio':0.95}
     # Decides of specific regret values are marked for clarity
     # evals = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
     # evals = [10]
-    # data_marking = {'BO':evals}
+    # data_marking = {'BO':[1, 2, 6], 'GD':[4, 8]}
+    data_marking = {}
+    confidence = 'ratio'
     plot_data = generate_regret(csv_dir, opt_list, sample_count, eval_count, objective, gold_value)
-    # plot_simple(plot_data['Simple'], plotting_info, eval_count)#,  data_marking)
-    # plot_cum(plot_data['Cumulative'], plotting_info, eval_count)#, data_marking)
-    # plot_ave(plot_data['Average'], plotting_info, eval_count)#, data_marking)
+    # plot_simple(plot_data['Simple'], plotting_info, eval_count,data_marking, confidence)
+    # plot_cum(plot_data['Cumulative'], plotting_info, eval_count, data_marking, confidence)
+    # plot_ave(plot_data['Average'], plotting_info, eval_count, data_marking, confidence)
+    # exit()
     # Let's look at hist data for each regret
     # hist_data_simple = plot_data['Simple']['BO'][:,9]
     # hist_data_cum = plot_data['Cumulative']['BO'][:,9]
@@ -715,4 +839,4 @@ if __name__ == '__main__':
     #              }
     # regret_histogram(hist_data_simple, hist_info)
     # plot_trajectories(plot_data, plotting_info)
-    plot_violins(plot_data, plotting_info)
+    plot_violins(plot_data, plotting_info, save_loc='../../Desktop', palette='pastel')
