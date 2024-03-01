@@ -249,6 +249,14 @@ def rewriteHeronInput(heron_input, opt_params, trial):
     pickle = glob.glob(current_dir+'/*.pk')[0]
     shutil.copy(pickle, new_heron_dir)
 
+    # If this is Synfuels case, copy data and functions.py to each heron directory
+    try:
+        functions = glob.glob(current_dir+'/functions.py')
+        data = glob.glob(current_dir+'/data')
+        shutil.copy(functions, new_heron_dir)
+        shutil.copy(data, new_heron_dir)
+    except:
+        print('Not a Synfuels case...')
     return new_input
 
 def preprocessOuter(outer_file, opt_params):
