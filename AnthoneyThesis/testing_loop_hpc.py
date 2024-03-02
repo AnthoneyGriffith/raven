@@ -250,13 +250,17 @@ def rewriteHeronInput(heron_input, opt_params, trial):
     shutil.copy(pickle, new_heron_dir)
 
     # If this is Synfuels case, copy data and functions.py to each heron directory
-    try:
-        functions = current_dir + '/functions.py'
-        data = current_dir + '/data'
-        shutil.copy(functions, new_heron_dir)
-        shutil.copytree(data, new_heron_dir)
-    except:
-        print('Not a Synfuels case...')
+    functions = current_dir + '/functions.py'
+    data = current_dir + '/data'
+    shutil.copy(functions, new_heron_dir)
+    shutil.copytree(data, new_heron_dir)
+    # try:
+    #     functions = current_dir + '/functions.py'
+    #     data = current_dir + '/data'
+    #     shutil.copy(functions, new_heron_dir)
+    #     shutil.copytree(data, new_heron_dir)
+    # except:
+    #     print('Not a Synfuels case...')
     return new_input
 
 def preprocessOuter(outer_file, opt_params):
