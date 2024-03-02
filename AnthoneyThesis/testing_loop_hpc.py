@@ -251,10 +251,10 @@ def rewriteHeronInput(heron_input, opt_params, trial):
 
     # If this is Synfuels case, copy data and functions.py to each heron directory
     try:
-        functions = glob.glob(current_dir+'/functions.py')
-        data = glob.glob(current_dir+'/data')
+        functions = current_dir + '/functions.py'
+        data = current_dir + '/data'
         shutil.copy(functions, new_heron_dir)
-        shutil.copy(data, new_heron_dir)
+        shutil.copytree(data, new_heron_dir)
     except:
         print('Not a Synfuels case...')
     return new_input
