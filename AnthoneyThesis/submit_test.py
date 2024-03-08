@@ -23,7 +23,7 @@ def submit(arg_dict, opt_dict, acqu_dict):
                     '-re', arg_dict['Realizations'],
                     '-o', 'BayesianOptimizer',
                     '-m', '8g',
-                    '-rt', '120:00:00',
+                    '-rt', '140:00:00',
                     '-as', str(int(25*float(arg_dict['Dimension']))),
                     '-ip', str(1),
                     '-d', str(1),
