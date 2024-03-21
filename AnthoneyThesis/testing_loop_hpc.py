@@ -291,6 +291,11 @@ def preprocessOuter(outer_file, opt_params):
     opt = parsed.find("Optimizers")[0]
     if opt.tag != 'BayesianOptimizer':
         output.text = output.text + ', modelRuns, stepSize, rejectReason, conv_gradient, conv_samePoint, conv_objective'
+        # Setting gradient history window if desired
+        if opt_params['Window']:
+            gradhist = opt.find("stepSize").find("GradientHistory")
+            window = tree.SubElement(gradhist, 'window')
+            window.text = '3'
         extension = '_' + opt_params['Analysis Name'] + '.xml'
         new_outer = outer_file.replace('.xml', extension)
         parsed.write(new_outer)
@@ -470,6 +475,7 @@ if __name__ == '__main__':
     parser.add_argument("-ms", "--modelseeds", required=False, help="Number of seedings for GPR model selection")
     parser.add_argument("-as", "--acquisitionseeds", required=False, help='Number of seeds for acquisition optimization')
     parser.add_argument("-d", "--delay", required=True, help='Pause between each job submission to HPC')
+    parser.add_argument("-w", "--window", required=True, help='[y/n] whether to use extended window for GD histories')
     args = parser.parse_args()
     opt_params = {'Analysis Name':args.name,
                   'Max Evaluations':args.evals,
@@ -491,4 +497,8 @@ if __name__ == '__main__':
     else:
         print('Invalid input for arg -hpc')
         exit()
+    if args.window == 'y':
+        opt_params.update({'Window':True})
+    elif args.window == 'n':
+        opt_params.update({'Window':False})
     ravenLoop(args.raven, args.heron, args.input, int(args.trials), opt_params)

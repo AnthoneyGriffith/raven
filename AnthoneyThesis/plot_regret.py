@@ -16,6 +16,7 @@ def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective,
         @ In, best_count, number of samples to store and calculate gold value variance with
         @ In, max, bool that says whether it was a minimization or maximization problem
         @ Out, gold_value, recommended gold value
+        @ Out, gold_dict, dictionary with detailed info from gold value determination run
     """
     # Initialize gold data dictionary used for comparison
     gold_dict = {}
@@ -131,7 +132,7 @@ def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective,
           f'The gold value is {gold_value}\n'
           f'The method that found this value is {gold_method}\n'
           f'The decision variables are...\n{gold_decision}\n')
-    return gold_value
+    return gold_value, gold_dict
 
 def generate_regret(csv_dir, opt_list, sample_count, eval_count, objective, gold_value):
     """
