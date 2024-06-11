@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<Simulation  verbosity="debug">
+
+  <RunInfo>
+    <WorkingDir>./sweep</WorkingDir>
+    <Sequence>
+      eval
+    </Sequence>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="eval" sleepTime="1e-5">
+    <Input class="DataObjects" type="PointSet">dummyIN</Input>
+    <Model class="Models" type="ExternalModel">SweepSimple</Model>
+    <Sampler class="Samplers" type="Grid">Sampler</Sampler>
+    <Output class="DataObjects" type="PointSet">Evaluations</Output>
+    <Output class="OutStreams" type="Print">outEvaluations</Output>
+    </MultiRun>
+  </Steps>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../raven_simple_sweep.py" name="SweepSimple" subType="">
+      <inputs>k</inputs>
+      <outputs>E_Ts_x1, E_OS_x1, E_Osc_x1, E_Ts_x2, E_OS_x2, E_Osc_x2</outputs>
+    </ExternalModel>
+  </Models>
+
+  <Distributions>
+    <Uniform name='Bounds'>
+      <lowerBound>0</lowerBound>
+      <upperBound>1e6</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Grid name="Sampler">
+      <variable name="k">
+        <distribution>Bounds</distribution>
+        <grid construction="equal" steps="200" type="value">1e-3 1e6</grid>
+      </variable>
+    </Grid>
+  </Samplers>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>k</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="Evaluations">
+      <Input>k</Input>
+      <Output>E_Ts_x1, E_OS_x1, E_Osc_x1, E_Ts_x2, E_OS_x2, E_Osc_x2</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <!-- A csv file containing the output of the example -->
+    <Print name="outEvaluations">
+      <type>csv</type>
+      <source>Evaluations</source>
+      <filename>evaluations</filename>
+      <what>input,output,metadata</what>
+    </Print>
+  </OutStreams>
+</Simulation>

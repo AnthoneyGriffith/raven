@@ -1,0 +1,12 @@
+<DataObjectMetadata name="Evaluations">
+  <DataSet type="Static">
+    <general>
+      <datasetName>Evaluations</datasetName>
+      <inputs>k1,k2</inputs>
+      <outputs>E_Ts_x1,E_Tr_x1,E_OS_x1,E_Osc_x1,E_Ts_x2,E_Tr_x2,E_OS_x2,E_Osc_x2,E_Up,E_Ui,J</outputs>
+      <pointwise_meta>PointProbability,ProbabilityWeight,ProbabilityWeight-k1,ProbabilityWeight-k2,prefix</pointwise_meta>
+      <sampleTag>RAVEN_sample_ID</sampleTag>
+    </general>
+  </DataSet>
+  
+</DataObjectMetadata>

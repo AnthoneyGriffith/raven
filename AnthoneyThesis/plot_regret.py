@@ -105,7 +105,7 @@ def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective,
               f'The variance of these is {np.var(obj_array)}\n'
               f'The average of these is {np.mean(obj_array)}\n'
               f'The std is {np.std(obj_array)}\n'
-              f'The percent std is {np.divide(np.std(obj_array),np.mean(obj_array))}\n')
+              f'The percent std is {100*np.abs(np.divide(np.std(obj_array),np.mean(obj_array)))}\n')
 
         for var in decision_vars:
             print(f'The value of {var} at the best solution is {var_dict[var+"_best"]}\n'
@@ -113,7 +113,7 @@ def determine_gold_value(csv_dir, opt_list, sample_count, eval_count, objective,
                   f'The variance of these are {np.var(var_dict[var])}\n'
                   f'The average of these is {np.mean(var_dict[var])}\n'
                   f'The std is {np.std(var_dict[var])}\n'
-                  f'The percent std is {100*np.divide(np.std(var_dict[var]),np.mean(var_dict[var]))}\n')
+                  f'The percent std is {100*np.abs(np.divide(np.std(var_dict[var]),np.mean(var_dict[var])))}\n')
             
         # Storing total dictionary of information over all optimizers
         gold_dict[method].update(var_dict)
