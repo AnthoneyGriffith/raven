@@ -37,10 +37,10 @@ def simulation(self, Input, closed_loop, control):
     @ Out, None
   """
   # Running monte carlo simulation of closed-loop system
-  tsteps = np.linspace(0, 20, 20000)
+  tsteps = np.linspace(0, 20, 10000)
   initial_condition_dist = 'uniform'
   dist_bounds = np.array([[-2, 2], [-3, 3]])
-  sample_count = 200
+  sample_count = 100
   settling_time_tol = 0.05
   rise_time_ratio = 0.05
   desired_state = None
