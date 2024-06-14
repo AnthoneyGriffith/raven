@@ -2,8 +2,7 @@
 <Simulation  verbosity="debug">
 
   <RunInfo>
-    <WorkingDir><div class="">
-    <optLCB></optLCB></WorkingDir>
+    <WorkingDir>./optLCB</WorkingDir>
     <Sequence>
       opt, print
     </Sequence>
