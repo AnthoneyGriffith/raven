@@ -21,9 +21,9 @@ def simulate(closed_loop_dynamics, initial_conditions, tsteps, options=None):
     # Integrate the system forward
     solution = int.solve_ivp(fun=closed_loop_dynamics, t_span=(tsteps[0], tsteps[-1]),
                           y0=initial_conditions, t_eval=tsteps, method='RK45')
-    
+
     return solution
-    
+
 if __name__ == '__main__':
     print('Testing simulator for demonstration')
 
@@ -36,14 +36,14 @@ if __name__ == '__main__':
         xdot[0] = x[1]
         xdot[1] = -1*np.square(omega_0)*x[0] - 2*zeta*omega_0*x[1] + (1/m)*u
         return xdot
-    
+
     # Testing integrator and plotting results
     closed_loop_dynamics = lambda t, y: harmonic_osc(t, x=y)
     initial_conditions = np.array([1.5, -0.5])
     tsteps = np.linspace(0, 10, 1000)
 
     solution = simulate(closed_loop_dynamics, initial_conditions, tsteps)
-    
+
     plt.rcParams.update({
     "text.usetex": True,
     "font.family": "Helvetica"
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     closed_loop_dynamics = lambda t, y: harmonic_osc(t, x=y, zeta=0)
 
     solution = simulate(closed_loop_dynamics, initial_conditions, tsteps)
-    
+
     plt.rcParams.update({
     "text.usetex": True,
     "font.family": "Helvetica"
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     closed_loop_dynamics = lambda t, y: harmonic_osc(t, x=y, u=200000)
 
     solution = simulate(closed_loop_dynamics, initial_conditions, tsteps)
-    
+
     plt.rcParams.update({
     "text.usetex": True,
     "font.family": "Helvetica"
