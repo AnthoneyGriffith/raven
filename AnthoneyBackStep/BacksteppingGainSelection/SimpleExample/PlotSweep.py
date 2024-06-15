@@ -4,7 +4,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 # Loading data from sweep run
-sweep_info = pd.read_csv('sweep/evaluations_high_res.csv')
+sweep_info = pd.read_csv('sweep/evaluations_opt_res.csv')
 X = sweep_info['k1'].to_numpy()
 Y = sweep_info['k2'].to_numpy()
 N = len(np.unique(X))

@@ -1,0 +1,132 @@
+<?xml version="1.0" ?>
+<Simulation  verbosity="debug">
+
+  <RunInfo>
+    <WorkingDir>./optPoI_RQ</WorkingDir>
+    <Sequence>
+      opt, print
+    </Sequence>
+  </RunInfo>
+
+  <Steps>
+    <MultiRun name="opt">
+      <Input class="DataObjects" type="PointSet">dummyIN</Input>
+      <Model class="Models" type="ExternalModel">Simple</Model>
+      <Optimizer class="Optimizers" type="BayesianOptimizer">opter</Optimizer>
+      <SolutionExport class="DataObjects" type="PointSet">opt_soln</SolutionExport>
+      <Output class="DataObjects" type="PointSet">optOut</Output>
+      <Output class="OutStreams" type="Print">opt_export</Output>
+    </MultiRun>
+    <IOStep name="print">
+      <Input class="DataObjects" type="PointSet">opt_soln</Input>
+      <Output class="OutStreams" type="Print">opt_export</Output>
+    </IOStep>
+  </Steps>
+
+  <Models>
+    <ExternalModel ModuleToLoad="../Simple.py" name="Simple" subType="">
+      <inputs>k1, k2</inputs>
+      <outputs>E_Ts_x1, E_Tr_x1, E_OS_x1, E_Osc_x1, E_Ts_x2, E_Tr_x2, E_OS_x2, E_Osc_x2, E_Up, E_Ui, J</outputs>
+    </ExternalModel>
+    <ROM name="gpROM" subType="GaussianProcessRegressor">
+      <Features>k1,k2</Features>
+      <Target>J</Target>
+      <alpha>1e-8</alpha>
+      <n_restarts_optimizer>15</n_restarts_optimizer>
+      <normalize_y>True</normalize_y>
+      <random_state>42</random_state>
+      <kernel>Custom</kernel>
+      <custom_kernel>(Constant*RationalQuadratic)</custom_kernel>
+      <multioutput>False</multioutput>
+    </ROM>
+  </Models>
+
+  <Distributions>
+    <Uniform name='Bounds1'>
+      <lowerBound>0</lowerBound>
+      <upperBound>5</upperBound>
+    </Uniform>
+    <Uniform name='Bounds2'>
+      <lowerBound>0</lowerBound>
+      <upperBound>2</upperBound>
+    </Uniform>
+  </Distributions>
+
+  <Samplers>
+    <Stratified name="LHS_samp">
+      <samplerInit>
+        <initialSeed>42</initialSeed>
+      </samplerInit>
+      <variable name="k1">
+        <distribution>Bounds1</distribution>
+        <grid construction="equal" steps="5" type="CDF">0 1</grid>
+      </variable>
+      <variable name="k2">
+        <distribution>Bounds2</distribution>
+        <grid construction="equal" steps="5" type="CDF">0 1</grid>
+      </variable>
+    </Stratified>
+  </Samplers>
+
+  <Optimizers>
+    <BayesianOptimizer name="opter">
+      <objective>J</objective>
+      <variable name="k1">
+        <distribution>Bounds1</distribution>
+      </variable>
+      <variable name="k2">
+        <distribution>Bounds2</distribution>
+      </variable>
+      <TargetEvaluation class="DataObjects" type="PointSet">optOut</TargetEvaluation>
+      <samplerInit>
+        <limit>45</limit>
+        <initialSeed>42</initialSeed>
+        <writeSteps>every</writeSteps>
+      </samplerInit>
+      <Sampler    class="Samplers"  type="Stratified" >LHS_samp</Sampler>
+      <ROM  class="Models" type="ROM">gpROM</ROM>
+      <ModelSelection>
+        <Duration>1</Duration>
+        <Method>Internal</Method>
+      </ModelSelection>
+      <convergence>
+        <acquisition>1e-6</acquisition>
+        <persistence>10</persistence>
+      </convergence>
+      <Acquisition>
+        <ProbabilityOfImprovement>
+          <optimizationMethod>differentialEvolution</optimizationMethod>
+          <seedingCount>50</seedingCount>
+          <epsilon>0.999</epsilon>
+          <rho>5.620526</rho>
+          <transient>Exploit</transient>
+        </ProbabilityOfImprovement>
+      </Acquisition>
+    </BayesianOptimizer>
+  </Optimizers>
+
+  <DataObjects>
+    <PointSet name="dummyIN">
+      <Input>k1, k2</Input>
+      <Output>OutputPlaceHolder</Output>
+    </PointSet>
+    <PointSet name="optOut">
+      <Input>k1,k2</Input>
+      <Output>J, E_Ts_x1, E_Tr_x1, E_OS_x1, E_Osc_x1, E_Ts_x2, E_Tr_x2, E_OS_x2, E_Osc_x2, E_Up, E_Ui</Output>
+    </PointSet>
+    <PointSet name="opt_soln">
+      <Input>trajID</Input>
+      <Output>iteration, accepted, k1, k2, E_Ts_x1, E_Tr_x1, E_OS_x1, E_Osc_x1, E_Ts_x2, E_Tr_x2, E_OS_x2, E_Osc_x2, E_Up, E_Ui, J, solutionDeviation, rejectReason, modelRuns, radiusFromBest, radiusFromLast, solutionValue, acquisition</Output>
+    </PointSet>
+  </DataObjects>
+
+  <OutStreams>
+    <!-- A csv file containing the output of the example -->
+    <Print name="opt_export">
+      <type>csv</type>
+      <source>opt_soln</source>
+      <filename>opt_data</filename>
+      <what>input,output,metadata</what>
+    </Print>
+  </OutStreams>
+</Simulation>
