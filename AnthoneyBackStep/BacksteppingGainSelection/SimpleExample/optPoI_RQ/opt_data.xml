@@ -1,0 +1,11 @@
+<DataObjectMetadata name="opt_soln">
+  <DataSet type="Static">
+    <general>
+      <datasetName>opt_soln</datasetName>
+      <inputs>trajID</inputs>
+      <outputs>iteration,accepted,k1,k2,E_Ts_x1,E_Tr_x1,E_OS_x1,E_Osc_x1,E_Ts_x2,E_Tr_x2,E_OS_x2,E_Osc_x2,E_Up,E_Ui,J,solutionDeviation,rejectReason,modelRuns,radiusFromBest,radiusFromLast,solutionValue,acquisition</outputs>
+      <sampleTag>RAVEN_sample_ID</sampleTag>
+    </general>
+  </DataSet>
+  
+</DataObjectMetadata>
